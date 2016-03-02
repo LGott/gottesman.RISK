@@ -23,22 +23,22 @@ public class CardDeck {
 	public void fillDeck() {
 
 		// Fill the deck with random cards based on battalion type
-		card = BattalionType.values()[rand.nextInt(3)];
 
-		for (int i = 0; i < deck.size(); i++) {
-
+		for (int i = 0; i < 42; i++) {
+			card = BattalionType.values()[rand.nextInt(3)];
 			deck.add(card);
+
 		}
 	}
 
 	public BattalionType drawCard() {
 
-		int num = rand.nextInt(deck.size());
+		int num = rand.nextInt(42);
 
 		BattalionType cardDrawn = deck.get(num);
-		deck.remove(num);
+		deck.remove(num); // Remove the card from the arrayList so that it cannot be drawn again
 
-		return cardDrawn; // Remove the card from the arrayList so that it cannot be drawn again
+		return cardDrawn;
 
 	}
 

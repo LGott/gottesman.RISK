@@ -6,13 +6,15 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-//import sun.audio.AudioPlayer;
-//import sun.audio.AudioStream;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 public class PlayRisk extends JFrame {
 
@@ -49,13 +51,12 @@ public class PlayRisk extends JFrame {
 			}
 		});
 
-		/*
-		 * InputStream in = new FileInputStream("risk music .wav");
-		 * 
-		 * AudioStream music = new AudioStream(in);
-		 * 
-		 * AudioPlayer.player.start(music);
-		 */
+		InputStream in = new FileInputStream("Sound/risk music .wav");
+
+		AudioStream music = new AudioStream(in);
+
+		AudioPlayer.player.start(music);
+
 	}
 
 	public static void main(String[] args) {
