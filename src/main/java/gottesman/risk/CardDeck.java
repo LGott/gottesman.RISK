@@ -31,12 +31,17 @@ public class CardDeck {
 		}
 	}
 
-	public BattalionType drawCard() {
+	public BattalionType drawCard() throws DeckEmptyException {
+
+		if (deck.isEmpty() == true) {
+			throw new DeckEmptyException();
+		}
 
 		int num = rand.nextInt(deck.size());
 
 		BattalionType cardDrawn = deck.get(num);
 		deck.remove(num); // Remove the card from the arrayList so that it cannot be drawn again
+		System.out.println(deck);
 		return cardDrawn;
 
 	}
