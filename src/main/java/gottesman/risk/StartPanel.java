@@ -20,7 +20,7 @@ public class StartPanel extends JPanel {
 	public StartPanel() {
 
 		try {
-			image = ImageIO.read(new File("StartScreenPic.jpg"));
+			image = ImageIO.read(new File("Images/StartScreenPic.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
