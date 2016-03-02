@@ -8,11 +8,17 @@ public class CardDeckTest {
 
 	@Test
 	public void testDrawCard() {
-
 		CardDeck cardDeck = new CardDeck();
 		BattalionType battalionType = cardDeck.drawCard();
 		Assert.assertNotNull(battalionType);
-
+	}
+	
+	@Test
+	public void testDrawAllCards() {
+		CardDeck cardDeck = new CardDeck();
+		for ( int i=0; i<42; i++ ) {
+			cardDeck.drawCard();
+		}
 	}
 
 }
