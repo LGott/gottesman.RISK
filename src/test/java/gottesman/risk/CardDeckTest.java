@@ -20,5 +20,13 @@ public class CardDeckTest {
 			cardDeck.drawCard();
 		}
 	}
+	
+	@Test
+	public void testOverdraw() {
+		CardDeck cardDeck = new CardDeck();
+		for ( int i=0; i<100; i++ ) {
+			cardDeck.drawCard();
+		}
+	}
 
 }
