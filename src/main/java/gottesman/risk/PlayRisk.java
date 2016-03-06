@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import gottesman.risk.map.BoardView;
+import gottesman.risk.map.MoveOrAttackController;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -40,7 +41,7 @@ public class PlayRisk extends JFrame {
 				getClass().getResourceAsStream("/Continents.txt"), 
 				getClass().getResourceAsStream("/Adjacencies.txt"));
 		dataManager.loadTerritories();
-		BoardView boardView = new BoardView(dataManager.getTerritories());
+		BoardView boardView = new BoardView(dataManager.getTerritories(), new MoveOrAttackController());
 		container.add(boardView, BorderLayout.CENTER);
 
 //		InputStream in = new FileInputStream("Sound/risk music .wav");

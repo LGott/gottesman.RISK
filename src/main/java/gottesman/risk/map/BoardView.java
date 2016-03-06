@@ -3,6 +3,8 @@ package gottesman.risk.map;
 import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import javax.swing.JLabel;
 
 import gottesman.risk.Territory;
 
-public class BoardView extends JLabel implements ComponentListener {
+public class BoardView extends JLabel implements ComponentListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final String IMAGE_FILENAME = "/Images/RiskBoardFinal.jpg";
@@ -22,24 +24,25 @@ public class BoardView extends JLabel implements ComponentListener {
 	private static final int IMAGE_WIDTH = 4500;
 	private BufferedImage boardImage;
 	private List<TerritoryView> territoryViews;
+	private GameController gameController;
 
-	public BoardView(List<Territory> territories) {
+	public BoardView(List<Territory> territories, GameController gameController) {
 		// null LayoutManager so we can set the positions of the TerritoryViews
 		setLayout(null);
 		
 		loadBoardImage();
 
-		createTerritoryViews(territories);
+		this.gameController = gameController;
+		createTerritoryViews(territories, gameController);
 
 		addComponentListener(this);
 	}
 
-	private void createTerritoryViews(List<Territory> territories) {
+	private void createTerritoryViews(List<Territory> territories, GameController gameController) {
 		this.territoryViews = new ArrayList<TerritoryView>();
-		TerritoryViewListener territoryViewListener = new TerritoryViewListener();
+		TerritoryViewListener territoryViewListener = new TerritoryViewListener(gameController);
 		for (Territory territory : territories) {
 			TerritoryView territoryView = new TerritoryView(territory, territory.getX(), territory.getY());
-			territoryView.hideBorder();
 			territoryView.addMouseListener(territoryViewListener);
 			add(territoryView);
 			territoryViews.add(territoryView);
@@ -88,6 +91,26 @@ public class BoardView extends JLabel implements ComponentListener {
 	}
 
 	public void componentHidden(ComponentEvent e) {
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		gameController.onClickMap(this);
+	}
+
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		
 	}
 
 }
