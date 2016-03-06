@@ -14,10 +14,8 @@ public class Dice {
 
 		ArrayList<Integer> threeDice = new ArrayList<Integer>();
 
-		int i = 0;
-		while (i < 3) {
+		for (int i = 0; i < 3; i++) {
 			threeDice.add(die.roll());
-			i++;
 		}
 
 		return threeDice;
@@ -27,10 +25,9 @@ public class Dice {
 
 		ArrayList<Integer> twoDice = new ArrayList<Integer>();
 
-		int i = 0;
-		while (i < 2) {
+		for (int i = 0; i < 2; i++) {
 			twoDice.add(die.roll());
-			i++;
+
 		}
 
 		return twoDice;
