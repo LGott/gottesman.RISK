@@ -16,6 +16,8 @@ import gottesman.risk.Territory;
 
 public class BoardView extends JLabel implements ComponentListener {
 
+	private static final long serialVersionUID = 1L;
+	private static final String IMAGE_FILENAME = "/Images/RiskBoardFinal.jpg";
 	private static final int IMAGE_HEIGHT = 3600;
 	private static final int IMAGE_WIDTH = 4500;
 	private BufferedImage boardImage;
@@ -46,8 +48,7 @@ public class BoardView extends JLabel implements ComponentListener {
 
 	private void loadBoardImage() {
 		try {
-			boardImage = ImageIO.read(getClass().getResourceAsStream("/Images/RiskBoardFinal.jpg"));
-			this.setIcon(new ImageIcon(boardImage));
+			boardImage = ImageIO.read(getClass().getResourceAsStream(IMAGE_FILENAME));
 		} catch (IOException e) {
 			// If this happens, crash the app
 			throw new RuntimeException(e);
@@ -55,6 +56,7 @@ public class BoardView extends JLabel implements ComponentListener {
 	}
 	
 	public void paintComponent( Graphics g ) {
+		super.paintComponent(g);
 		g.drawImage(boardImage, 0, 0, getWidth(), getHeight(), null);
 	}
 	
