@@ -11,19 +11,24 @@ import java.util.Map;
 
 public class DataManager {
 
+	// TODO: this should not be a member variable
 	private BufferedReader in;
+	
 	private ArrayList<Territory> territories;
 	private ArrayList<Continent> continents;
 	private InputStream terFile;
 	private InputStream contFile;
 	private InputStream adjFile;
 
+	// TODO: this should not be a member variable
 	private String[] list;
+	// TODO: this should not be a member variable
 	private String line;
 
 	private Map<String, String[]> adjacencies;
 	private Map<String, Territory> territoryNames;
 
+	// TODO: don't pass these in, create them inside of DataManager
 	public DataManager(InputStream terFile, InputStream contFile, InputStream adjFile) {
 
 		this.territories = new ArrayList<Territory>();
@@ -36,6 +41,8 @@ public class DataManager {
 
 	}
 
+
+	// TODO: does this method need to be public
 	public void loadTerritories() throws NumberFormatException, IOException {
 
 		reader(terFile);
@@ -47,6 +54,7 @@ public class DataManager {
 		}
 	}
 
+	// TODO: does this method need to be public
 	public void loadContinents() throws NumberFormatException, IOException {
 
 		reader(contFile);
@@ -60,6 +68,7 @@ public class DataManager {
 		}
 	}
 
+	// TODO: does this method need to be public
 	public void loadAdjacencies() throws IOException {
 
 		reader(adjFile);
@@ -80,6 +89,7 @@ public class DataManager {
 		return this.territoryNames;
 	}
 
+	// TODO: does this method need to be public
 	public void reader(InputStream file) throws FileNotFoundException {
 		in = new BufferedReader(new InputStreamReader(file));
 	}
