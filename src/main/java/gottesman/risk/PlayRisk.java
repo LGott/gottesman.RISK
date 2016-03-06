@@ -12,7 +12,9 @@ import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
+import gottesman.risk.map.BoardView;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -22,7 +24,6 @@ public class PlayRisk extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton button;
 
 	public PlayRisk() throws IOException {
 
@@ -34,28 +35,19 @@ public class PlayRisk extends JFrame {
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
-		container.setBackground(Color.BLACK);
-		StartPanel panel = new StartPanel();
-		container.add(panel, BorderLayout.CENTER);
+		DataManager dataManager = new DataManager(
+				getClass().getResourceAsStream("/Territories.txt"), 
+				getClass().getResourceAsStream("/Continents.txt"), 
+				getClass().getResourceAsStream("/Adjacencies.txt"));
+		dataManager.loadTerritories();
+		BoardView boardView = new BoardView(dataManager.getTerritories());
+		container.add(boardView, BorderLayout.CENTER);
 
-		button = new JButton("PLAY GAME!");
-		button.setPreferredSize(new Dimension(150, 40));
-		container.add(button, BorderLayout.SOUTH);
-		button.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-
-				// dispose();
-				// new GameBoard().setVisible(true);
-
-			}
-		});
-
-		InputStream in = new FileInputStream("Sound/risk music .wav");
-
-		AudioStream music = new AudioStream(in);
-
-		AudioPlayer.player.start(music);
+//		InputStream in = new FileInputStream("Sound/risk music .wav");
+//
+//		AudioStream music = new AudioStream(in);
+//
+//		AudioPlayer.player.start(music);
 
 	}
 
