@@ -1,13 +1,13 @@
 package gottesman.risk.map;
 
+import gottesman.risk.Territory;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
-import gottesman.risk.Territory;
 
 public class TerritoryView extends JLabel {
 
@@ -40,7 +40,7 @@ public class TerritoryView extends JLabel {
 	public void hideBorder() {
 		setBorder(null);
 	}
-	
+
 	public void showBorder(Color color) {
 		setBorder(BorderFactory.createLineBorder(color));
 	}

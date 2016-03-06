@@ -7,7 +7,7 @@ Northwest Territory,807,983
 Ontario,1019,1272
 Quebec,1309,1260
 Western United States,775,1512 
-Argentina,1200,2912
+Argentina,1214,2816
 Brazil,1354,2399
 Venezuela,1088,2159
 Peru,1095,2510
@@ -33,7 +33,7 @@ Kamchatka,3917,931
 Middle East,2727,2019
 Mongolia,3605,1559
 Siam,3557,2121
-Siberia,3207,1293
+Siberia,3283,989
 Ural,3053,1173
 Yakutsk,3611,915
 Eastern Australia,4165,3029
