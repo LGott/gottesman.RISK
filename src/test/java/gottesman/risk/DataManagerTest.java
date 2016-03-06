@@ -11,9 +11,8 @@ public class DataManagerTest {
 	DataManager data;
 
 	public DataManagerTest() {
-		data = new DataManager(getClass().getResource("/Territories.txt").getFile(),
-				getClass().getResource("/Continents.txt").getFile(),
-				getClass().getResource("/Adjacencies.txt").getFile());
+		data = new DataManager(getClass().getResourceAsStream("/Territories.txt"), getClass().getResourceAsStream(
+				"/Continents.txt"), getClass().getResourceAsStream("/Adjacencies.txt"));
 	}
 
 	@Test
