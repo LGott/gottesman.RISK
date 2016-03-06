@@ -1,11 +1,11 @@
 package gottesman.risk.map;
 
+import gottesman.risk.Territory;
+
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-
-import gottesman.risk.Territory;
 
 public class TerritoryView extends JLabel {
 
@@ -25,7 +25,7 @@ public class TerritoryView extends JLabel {
 	public void hideBorder() {
 		showBorder(Color.BLUE);
 	}
-	
+
 	public void showBorder(Color color) {
 		setBorder(BorderFactory.createLineBorder(color));
 	}
@@ -35,7 +35,7 @@ public class TerritoryView extends JLabel {
 	}
 
 	public void setXY(int x, int y) {
-		setBounds(x - WIDTH / 2, y - HEIGHT / 2, WIDTH, HEIGHT);
+		setBounds(x - (WIDTH / 2), y - (HEIGHT / 2), WIDTH, HEIGHT);
 	}
 
 }
