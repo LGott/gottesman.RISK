@@ -66,22 +66,25 @@ public class BoardView extends JLabel implements ComponentListener, MouseListene
 	/**
 	 * When the BoardView is resized, reposition all the TerritoryViews
 	 */
-	private void moveTerritories() {
+	private void moveTerritoryViews() {
 		double newWidth = getWidth();
 		double newHeight = getHeight();
+		
+		double widthRatio = newWidth / IMAGE_WIDTH;
+		double heightRatio = newHeight / IMAGE_HEIGHT;
 		
 		for ( TerritoryView territoryView : territoryViews ) {
 			Territory territory = territoryView.getTerritory();
 			territoryView.setXY(
-					(int)(newWidth / IMAGE_WIDTH * territory.getX()), 
-					(int)(newHeight / IMAGE_HEIGHT * territory.getY()));
+					(int)(widthRatio * territory.getX()), 
+					(int)(heightRatio * territory.getY()));
 			
 		}
 		
 	}
 
 	public void componentResized(ComponentEvent e) {
-		moveTerritories();
+		moveTerritoryViews();
 	}
 
 	public void componentMoved(ComponentEvent e) {

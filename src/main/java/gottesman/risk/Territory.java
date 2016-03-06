@@ -1,16 +1,17 @@
 package gottesman.risk;
 
+import java.awt.Color;
+
 public class Territory implements Comparable<Territory> {
 
 	private String name;
 	private int x;
 	private int y;
 
-	// private Color color;
-	// private int battalions;
+	private Color color;
+	private int battalions;
 
 	public Territory(String name, int x, int y) {
-
 		this.name = name;
 		this.x = x;
 		this.y = y;
@@ -28,15 +29,34 @@ public class Territory implements Comparable<Territory> {
 		return this.y;
 	}
 
-	/*
-	 * public Color getColor() { return color; }
-	 * 
-	 * public void setColor(Color color) { this.color = color; }
-	 * 
-	 * public int getBattalions() { return battalions; }
-	 * 
-	 * public void setBattalions(int battalions) { this.battalions = battalions; }
-	 */
+	public void occupy(Color color, int battalions) {
+		this.color = color;
+		this.battalions = battalions;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public int getBattalions() {
+		return battalions;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public void setBattalions(int battalions) {
+		this.battalions = battalions;
+	}
+	
+	public boolean isOccupiedBy(Color activePlayer) {
+		return color == activePlayer;
+	}
+	
+	public boolean isOccupied() {
+		return color != null && battalions > 0;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -63,7 +83,6 @@ public class Territory implements Comparable<Territory> {
 
 	public int compareTo(Territory other) {
 		return this.name.compareTo(other.getName());
-
 	}
 
 }
