@@ -16,13 +16,16 @@ public class DataManager {
 	private Map<String, String[]> adjacencies;
 	private Map<String, Territory> territoryNames;
 
-	public DataManager() {
+	public DataManager() throws NumberFormatException, IOException {
 
 		this.territories = new ArrayList<Territory>();
 		this.continents = new ArrayList<Continent>();
 		this.adjacencies = new HashMap<String, String[]>();
 		this.territoryNames = new HashMap<String, Territory>();
 
+		loadTerritories();
+		loadContinents();
+		loadAdjacencies();
 	}
 
 	private void loadTerritories() throws NumberFormatException, IOException {
@@ -49,7 +52,6 @@ public class DataManager {
 			String[] list = line.split("#");
 			String[] ter = list[2].split(",");
 			continents.add(new Continent(list[0], Integer.parseInt(list[1].trim()), ter));
-
 		}
 	}
 
@@ -79,21 +81,15 @@ public class DataManager {
 		return new BufferedReader(new InputStreamReader(file));
 	}
 
-	public ArrayList<Territory> getTerritories() throws NumberFormatException, IOException {
-		// TODO: move the loadTerritories() method to the constructor and remove the throws in this method
-		loadTerritories();
+	public ArrayList<Territory> getTerritories() {
 		return this.territories;
 	}
 
-	public ArrayList<Continent> getContinents() throws NumberFormatException, IOException {
-		// TODO: move the getContinents() method to the constructor and remove the throws in this method
-		loadContinents();
+	public ArrayList<Continent> getContinents() {
 		return this.continents;
 	}
 
 	public Map<String, String[]> getAdjacencies() throws IOException {
-		// TODO: move the getAdjacencies() method to the constructor and remove the throws in this method
-		loadAdjacencies();
 		return this.adjacencies;
 	}
 }

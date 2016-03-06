@@ -10,27 +10,26 @@ public class DataManagerTest {
 
 	DataManager data;
 
-	public DataManagerTest() {
-		data = new DataManager(getClass().getResourceAsStream("/Territories.txt"), getClass().getResourceAsStream(
-				"/Continents.txt"), getClass().getResourceAsStream("/Adjacencies.txt"));
+	public DataManagerTest() throws NumberFormatException, IOException {
+		data = new DataManager();
 	}
 
 	@Test
 	public void testTerritory() throws NumberFormatException, IOException {
-		data.loadTerritories();
+		data.getTerritories();
 		Assert.assertNotNull(data.getTerritories());
 	}
 
 	@Test
 	public void testContinent() throws NumberFormatException, IOException {
-		data.loadContinents();
+		data.getContinents();
 		Assert.assertNotNull(data.getContinents());
 
 	}
 
 	@Test
 	public void testAdjacencies() throws IOException {
-		data.loadAdjacencies();
+		data.getAdjacencies();
 		Assert.assertNotNull(data.getAdjacencies());
 	}
 

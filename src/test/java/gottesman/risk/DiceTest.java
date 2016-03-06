@@ -4,8 +4,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-// TODO: this class should be named DiceTest
-public class TestDice {
+
+public class DiceTest {
 	@Test
 	public void testDice() {
 
