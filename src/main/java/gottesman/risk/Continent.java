@@ -1,28 +1,17 @@
 package gottesman.risk;
 
-import java.util.ArrayList;
-
 public class Continent {
 
 	private String name;
 	private int bonus;
-	private ArrayList<Territory> territories; // list of territories that are in the continents
+	private String[] territories; // list of territories that are in the continents
 
-	public Continent(String name, int bonus, ArrayList<Territory> territories) {
+	public Continent(String name, int bonus, String[] territories) {
 
 		this.name = name;
 		this.bonus = bonus;
 		this.territories = territories;
 
-	}
-
-	public int checkContinent(ArrayList<Territory> playerCountries) {
-
-		if (playerCountries.containsAll(territories)) {
-			return this.bonus;
-		} else {
-			return 0; // No bonus given
-		}
 	}
 
 	public String getName() {
@@ -33,8 +22,18 @@ public class Continent {
 		return bonus;
 	}
 
-	public ArrayList<Territory> getTerritories() {
+	public String[] getTerritories() {
 		return territories;
 	}
+
+	@Override
+	public String toString() {
+		return this.name + " " + this.bonus + " " + territories.toString();
+	}
+	/*
+	 * public int checkContinent(ArrayList<Territory> playerCountries) {
+	 * 
+	 * if ((playerCountries.containsAll(territories)) { return this.bonus; } else { return 0; // No bonus given } }
+	 */
 
 }

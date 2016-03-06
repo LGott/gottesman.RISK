@@ -1,42 +1,42 @@
-     Alaska
-	Alberta
-	Central America
-	Eastern United States
-	Greenland
-	Northwest Territory
-	Ontario
-	Quebec
-	Western United States
-	Argentina
-	Brazil
-	Venezuela
-      Peru
-	Great Britain
-	Iceland
-	Northern Europe
-	Scandinavia
-	Southern Europe
-	Ukraine
-	Western Europe
-	Congo
-	East Africa
-	Egypt
-	Madagascar
-	North Africa
-	South Africa
-	Afghanistan
-	China
-	India
-	Irkutsk
-	Japan
-	Kamchatka
-	Middle East
-	Mongolia
-	Siam
-	Siberia
-	Ural
-	Yakutsk
-	Eastern Australia
-	Indonesia
-	New Guinea
-	Western Australia
+Alaska,390,977
+Alberta,739,1214
+Central America,796,1879
+Eastern United States,1081,1598
+Greenland,1577,812
+Northwest Territory,807,983
+Ontario,1019,1272
+Quebec,1309,1260
+Western United States,775,1512 
+Argentina,1200,2912
+Brazil,1354,2399
+Venezuela,1088,2159
+Peru,1095,2510
+Great Britain,1852,1432
+Iceland,1925,1114
+Northern Europe,2242,1500
+Scandinavia,2254,1070
+Southern Europe,2277,1754
+Ukraine,2638,1278
+Western Europe,1948,1830
+Congo,2410,2665
+East Africa,2586,2506
+Egypt,2399,2220
+Madagascar,2805,3050
+North Africa,2067,2303
+South Africa,2418,3015
+Afghanistan,2973,1645 
+China,3455,1757
+India,3217,2083
+Irkutsk,3541,1289
+Japan,4055,1511
+Kamchatka,3917,931
+Middle East,2727,2019
+Mongolia,3605,1559
+Siam,3557,2121
+Siberia,3207,1293
+Ural,3053,1173
+Yakutsk,3611,915
+Eastern Australia,4165,3029
+Indonesia,3651,2649
+New Guinea,3995,2483
+Western Australia,3803,2981
