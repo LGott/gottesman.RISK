@@ -56,11 +56,16 @@ public class TerritoryView extends JLabel {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		g.setColor(Color.CYAN);
-		g.fillOval(0, 0, WIDTH, HEIGHT);
 
-		// After you draw the oval, then draw the number.
-		super.paintComponent(g);
+		if (territory.isOccupied()) {
+			g.setColor(territory.getColor());
+			g.fillOval(0, 0, WIDTH, HEIGHT);
+			setText(String.valueOf(territory.getBattalions()));
+
+			// After you draw the oval, then draw the number.
+			super.paintComponent(g);
+		}
+
 	}
 
 }

@@ -30,7 +30,7 @@ public class TerritoryViewListener implements MouseListener {
 
 	public void mouseExited(MouseEvent e) {
 		TerritoryView territoryView = (TerritoryView) e.getSource();
-		territoryView.unselect();
+		//territoryView.deselect();
 	}
 
 }

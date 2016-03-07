@@ -6,21 +6,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DataManager {
 
 	private ArrayList<Territory> territories;
 	private ArrayList<Continent> continents;
-	private Map<String, String[]> adjacencies;
+	private Map<String, List<String>> adjacencies;
 	private Map<String, Territory> territoryNames;
 
 	public DataManager() throws NumberFormatException, IOException {
 
 		this.territories = new ArrayList<Territory>();
 		this.continents = new ArrayList<Continent>();
-		this.adjacencies = new HashMap<String, String[]>();
+		this.adjacencies = new HashMap<String, List<String>>();
 		this.territoryNames = new HashMap<String, Territory>();
 
 		loadTerritories();
@@ -65,7 +67,7 @@ public class DataManager {
 
 			String[] list = line.split("#");
 			String[] adj = list[1].trim().split(",");
-			adjacencies.put(list[0], adj);
+			adjacencies.put(list[0], Arrays.asList(adj));
 		}
 	}
 
@@ -89,7 +91,7 @@ public class DataManager {
 		return this.continents;
 	}
 
-	public Map<String, String[]> getAdjacencies() throws IOException {
+	public Map<String, List<String>> getAdjacencies() {
 		return this.adjacencies;
 	}
 }
