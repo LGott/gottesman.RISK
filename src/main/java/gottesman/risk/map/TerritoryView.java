@@ -21,7 +21,7 @@ public class TerritoryView extends JLabel {
 
 	public TerritoryView(Territory territory, int x, int y) {
 		super("", SwingConstants.CENTER);
-		setXY(x,y);
+		setXY(x, y);
 		this.territory = territory;
 	}
 
@@ -32,11 +32,11 @@ public class TerritoryView extends JLabel {
 	public void unselect() {
 		hideBorder();
 	}
-	
+
 	public void highlight() {
 		showBorder(HIGHLIGHTED);
 	}
-	
+
 	public void hideBorder() {
 		setBorder(null);
 	}
@@ -51,17 +51,14 @@ public class TerritoryView extends JLabel {
 
 	public void setXY(int x, int y) {
 		// set the location so x,y is in the middle of the box
-		setBounds(x - WIDTH / 2, 
-				y - HEIGHT / 2, 
-				WIDTH, 
-				HEIGHT);
+		setBounds(x - (WIDTH / 2), y - (HEIGHT / 2), WIDTH, HEIGHT);
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.CYAN);
 		g.fillOval(0, 0, WIDTH, HEIGHT);
-		
+
 		// After you draw the oval, then draw the number.
 		super.paintComponent(g);
 	}

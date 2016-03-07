@@ -1,13 +1,13 @@
 package gottesman.risk;
 
+import gottesman.risk.map.BoardView;
+import gottesman.risk.map.MoveOrAttackController;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-
-import gottesman.risk.map.BoardView;
-import gottesman.risk.map.MoveOrAttackController;
 
 public class PlayRisk extends JFrame {
 
@@ -27,8 +27,7 @@ public class PlayRisk extends JFrame {
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
 		DataManager dataManager = new DataManager();
-		BoardView boardView = new BoardView(dataManager.getTerritories(),
-				new MoveOrAttackController());
+		BoardView boardView = new BoardView(dataManager.getTerritories(), new MoveOrAttackController());
 		container.add(boardView, BorderLayout.CENTER);
 
 		// InputStream in = new FileInputStream("Sound/risk music .wav");
