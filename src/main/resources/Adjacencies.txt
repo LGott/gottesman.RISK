@@ -1,7 +1,7 @@
 Alaska#Alberta,Northwest Territory,Kamchatka
 Alberta#Alaska,Northwest Territory,Ontario,Western United States
-Central America#Western United States,Venezuela
-Eastern United States#Western United States,Ontario,Quebec
+Central America#Western United States,Venezuela,Eastern United States
+Eastern United States#Western United States,Ontario,Quebec,Central America
 Greenland#Northwest Territory,Ontario,Quebec,Iceland
 Northwest Territory#Alaska,Greenland,Ontario,Alberta
 Ontario#Northwest Territory,Greenland,Quebec,Eastern United States,Western United States,Alberta
@@ -11,14 +11,14 @@ Argentina#,Brazil,Peru
 Brazil#Venezuela,North Africa,Argentina.Peru
 Venezuela#Central America,Brazil,Peru
 Great Britain#Iceland,Scandinavia,Northern Europe,Western Europe
-Iceland#Greenland,Great Britain
+Iceland#Greenland,Great Britain,Scandanavia
 Northern Europe#Great Britain,Ukraine,Southern Europe,Western Europe
 Scandinavia#Great Britain,Ukraine
-Southern Europe#Western Europe,Northern Europe,Ukraine,Egypt,North Africa
+Southern Europe#Western Europe,Northern Europe,Ukraine,Egypt,North Africa, Middle East
 Ukraine#Scandinavia,Ural,Afghanistan,Middle East,Southern Europe,Northern Europe
 Western Europe#Great Britain,Northern Europe,Southern Europe,North Africa
 Congo#North Africa,Egypt,East Africa,South Africa
-East Africa#Egypt,Madagascar,South Africa,Congo
+East Africa#Egypt,Madagascar,South Africa,Congo,Middle East
 Egypt#Southern Europe,Middle East,East Africa,Congo,North Africa
 Madagascar#East Africa,South Africa
 North Africa#Western Europe,Southern Europe,Egypt,Congo,Brazil
