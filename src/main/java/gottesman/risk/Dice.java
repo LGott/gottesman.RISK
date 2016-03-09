@@ -33,9 +33,10 @@ public class Dice {
 		return twoDice;
 	}
 
-	public int rollOne() {
-
-		return die.roll();
+	public ArrayList<Integer> rollOne() {
+		ArrayList<Integer> oneDie = new ArrayList<Integer>();
+		oneDie.add(die.roll());
+		return oneDie;
 	}
 
 }

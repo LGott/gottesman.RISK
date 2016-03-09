@@ -23,7 +23,7 @@ public class PlayRisk extends JFrame {
 		setSize(1000, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setResizable(false);
+		setResizable(true);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
