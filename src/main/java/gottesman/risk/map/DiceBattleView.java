@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class DiceBattleView extends JFrame {
@@ -53,7 +54,7 @@ public class DiceBattleView extends JFrame {
 		defenderPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));// TODO Change to BoxLayout
 
 		final ArrayList<JButton> buttonsA = new ArrayList<JButton>();
-		buttonsA.add(this.rollThreeA = new JButton("Roll Three Dice"));
+		buttonsA.add(this.rollThreeA = new JButton("Roll Three Dice")); // TODO Change to Images
 		buttonsA.add(this.rollTwoA = new JButton("Roll Two Dice"));
 		buttonsA.add(this.rollOneA = new JButton("Roll One Die"));
 		buttonsA.add(this.attackAgain = new JButton("Attack Again"));
@@ -74,31 +75,42 @@ public class DiceBattleView extends JFrame {
 		add(attackerPanel, BorderLayout.WEST);
 		add(defenderPanel, BorderLayout.EAST);
 
+		// Just For Testing purposes
+		defender.setBattalions(4);
+		attacker.setBattalions(4);
+
 		ActionListener listener = new ActionListener() {
+
+			ArrayList<Integer> defenderDice;
+			ArrayList<Integer> attackerDice;
 
 			public void actionPerformed(ActionEvent e) {
 
 				JButton button = (JButton) e.getSource();
-				ArrayList<Integer> defenderDice = null;
-				ArrayList<Integer> attackerDice = null;
-
 				if (button.equals(rollThreeA) || button.equals(rollTwoA) || button.equals(rollOneA)) {
+					if (button.equals(rollOneA)) { // If attacker chooses one die, defender can only roll 1 also
+						rollTwoD.setEnabled(false);
+					}
 					attackerDice = getDiceSet(button, buttonsA);
 				}
 				if (button.equals(rollTwoD) || button.equals(rollOneD)) {
 					defenderDice = getDiceSet(button, buttonsD);
 				}
 				if (button.equals(attackAgain)) {
-					// if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
-					// TODO: Disable all buttons and return back to Controller
-					// } else {
-					attackAgain(buttonsA, buttonsD);
-					// }
+					if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
+						JOptionPane.showMessageDialog(null, "Not Enough Battalions! Cannot Attack Anymore!");
+						disableButtons(buttonsA);
+						attackAgain.setEnabled(false);
+					} else {
+						attackAgain(buttonsA, buttonsD);
+					}
 				}
 				if (button.equals(forfeit)) {
 					forfeit();
 				}
-				combatLogic.calculateWin(defenderDice, attackerDice, attacker, defender);
+				if (e.getSource().equals(rollTwoD) || e.getSource().equals(rollOneD)) {
+					combatLogic.calculateWin(attackerDice, defenderDice, attacker, defender);
+				}
 			}
 		};
 

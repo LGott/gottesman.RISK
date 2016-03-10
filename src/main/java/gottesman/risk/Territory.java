@@ -49,13 +49,17 @@ public class Territory implements Comparable<Territory> {
 	public void setBattalions(int battalions) {
 		this.battalions = battalions;
 	}
-	
+
+	public void decrementBattalions() {
+		this.battalions -= 1;
+	}
+
 	public boolean isOccupiedBy(Color activePlayer) {
 		return color == activePlayer;
 	}
-	
+
 	public boolean isOccupied() {
-		return color != null && battalions > 0;
+		return (color != null) && (battalions > 0);
 	}
 
 	@Override

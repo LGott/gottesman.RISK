@@ -25,6 +25,14 @@ public class CombatLogic {
 	public void calculateWin(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice, Territory attacker,
 			Territory defender) {
 
-		// TODO Compare the two dice sets and decrement the battalion amount based on the win
+		// Compare the two dice sets and decrement the battalion amount based on the win
+
+		for (int i = 0; i < defenderDice.size(); i++) {
+			if (attackerDice.get(i) > defenderDice.get(i)) {
+				defender.decrementBattalions();
+			} else if (defenderDice.get(i) >= attackerDice.get(i)) {
+				attacker.decrementBattalions();
+			}
+		}
 	}
 }

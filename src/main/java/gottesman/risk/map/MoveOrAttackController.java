@@ -32,10 +32,14 @@ public class MoveOrAttackController implements GameController {
 			List<String> neighbors = dataManager.getAdjacencies().get(selectedTerritory.getTerritory().getName());
 			// is it a neighbor?
 			if ((neighbors != null) && neighbors.contains(territory.getName())) {
-				if (territory.isOccupied()) {
-					// TODO: start a battle
+				if (territory.isOccupied() && (selectedTerritory.getTerritory().getBattalions() > 1)) {
+					// Can only attack if has more than one battalion
+
 					new DiceBattleView(selectedTerritory.getTerritory(), territory).setVisible(true);
 
+					if (territory.getBattalions() == 0) {
+						// Attacker occupies territory and moves battalions
+					}
 				} else {
 					// move n-1 battalions
 					territory.setColor(gameState.getActivePlayer());
