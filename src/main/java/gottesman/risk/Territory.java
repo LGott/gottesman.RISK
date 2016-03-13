@@ -8,6 +8,7 @@ public class Territory implements Comparable<Territory> {
 	private int x;
 	private int y;
 
+	private Player player;
 	private Color color;
 	private int battalions;
 
@@ -29,9 +30,13 @@ public class Territory implements Comparable<Territory> {
 		return this.y;
 	}
 
-	public void occupy(Color color, int battalions) {
-		this.color = color;
+	public void occupy(Player player, int battalions) {
+		this.player = player;
 		this.battalions = battalions;
+	}
+
+	public void setColor(Color color) {
+		this.color = player.getColor();
 	}
 
 	public Color getColor() {
@@ -42,24 +47,20 @@ public class Territory implements Comparable<Territory> {
 		return battalions;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
 	public void setBattalions(int battalions) {
-		this.battalions = battalions;
+		this.battalions += battalions;
 	}
 
 	public void decrementBattalions() {
 		this.battalions -= 1;
 	}
 
-	public boolean isOccupiedBy(Color activePlayer) {
-		return color == activePlayer;
+	public boolean isOccupiedBy(Player activePlayer) {
+		return player == activePlayer;
 	}
 
 	public boolean isOccupied() {
-		return (color != null) && (battalions > 0);
+		return (player != null) && (battalions > 0);
 	}
 
 	@Override

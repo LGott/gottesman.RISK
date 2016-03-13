@@ -6,30 +6,30 @@ import java.util.List;
 
 public class GameState {
 
-	private List<Color> players;
+	private List<Player> players;
 	private int currentPlayer;
-	
+
 	public GameState() {
-		players = new ArrayList<Color>();
-		players.add(Color.RED);
-		players.add(Color.GREEN);
-		players.add(Color.BLUE);
-		players.add(Color.ORANGE);
+		players = new ArrayList<Player>();
+		players.add(new Player(Color.GREEN));
+		players.add(new Player(Color.RED));
+		players.add(new Player(Color.BLUE));
+		players.add(new Player(Color.ORANGE));
 	}
 
-	public Color getActivePlayer() {
+	public Player getActivePlayer() {
 		return players.get(currentPlayer);
 	}
-	
+
 	public void nextPlayer() {
 		currentPlayer++;
-		if ( currentPlayer >= players.size() ) {
+		if (currentPlayer >= players.size()) {
 			currentPlayer = 0;
 		}
 	}
 
-	public List<Color> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
-	
+
 }

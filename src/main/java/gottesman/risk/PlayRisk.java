@@ -37,11 +37,10 @@ public class PlayRisk extends JFrame {
 
 		List<Territory> territories = dataManager.getTerritories();
 		territories.get(0).occupy(gameState.getActivePlayer(), 52);
+		// gameState.getActivePlayer().addTerritory(territories.get(0));
 
 		// InputStream in = new FileInputStream("Sound/risk music .wav");
-		//
 		// AudioStream music = new AudioStream(in);
-		//
 		// AudioPlayer.player.start(music);
 
 	}

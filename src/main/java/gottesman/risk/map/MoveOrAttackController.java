@@ -4,6 +4,7 @@ import gottesman.risk.DataManager;
 import gottesman.risk.GameState;
 import gottesman.risk.Territory;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MoveOrAttackController implements GameController {
@@ -35,20 +36,24 @@ public class MoveOrAttackController implements GameController {
 				if (territory.isOccupied() && (selectedTerritory.getTerritory().getBattalions() > 1)) {
 					// Can only attack if has more than one battalion
 
-					new DiceBattleView(selectedTerritory.getTerritory(), territory).setVisible(true);
+					try {
+						new DiceBattleView(selectedTerritory.getTerritory(), territory).setVisible(true);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 
 					if (territory.getBattalions() == 0) {
 						// Attacker occupies territory and moves battalions
+					} else {
+						// move n-1 battalions
+						territory.setColor(gameState.getActivePlayer().getColor());
+						territory.setBattalions(selectedTerritory.getTerritory().getBattalions() - 1);
+						territoryView.repaint();
+						selectedTerritory.getTerritory().setBattalions(1);
+						unselectSelectedTerritory();
+						selectedTerritory = territoryView;
+						selectedTerritory.select();
 					}
-				} else {
-					// move n-1 battalions
-					territory.setColor(gameState.getActivePlayer());
-					territory.setBattalions(selectedTerritory.getTerritory().getBattalions() - 1);
-					territoryView.repaint();
-					selectedTerritory.getTerritory().setBattalions(1);
-					unselectSelectedTerritory();
-					selectedTerritory = territoryView;
-					selectedTerritory.select();
 				}
 			}
 		}
