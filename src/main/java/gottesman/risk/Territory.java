@@ -10,7 +10,7 @@ public class Territory implements Comparable<Territory> {
 
 	private Player player;
 	private Color color;
-	private int battalions;
+	private int battalions = 0;
 
 	public Territory(String name, int x, int y) {
 		this.name = name;

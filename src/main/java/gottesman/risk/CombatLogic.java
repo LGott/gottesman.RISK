@@ -1,6 +1,7 @@
 package gottesman.risk;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CombatLogic {
 
@@ -26,6 +27,9 @@ public class CombatLogic {
 			Territory defender) {
 
 		// Compare the two dice sets and decrement the battalion amount based on the win
+
+		Collections.sort(attackerDice, Collections.reverseOrder());
+		Collections.sort(defenderDice, Collections.reverseOrder());
 
 		for (int i = 0; i < defenderDice.size(); i++) {
 			if (attackerDice.get(i) > defenderDice.get(i)) {
