@@ -39,6 +39,10 @@ public class Territory implements Comparable<Territory> {
 		this.color = player.getColor();
 	}
 
+	public void testSetColor(Color color) {
+		this.color = color;
+	}
+
 	public Color getColor() {
 		return color;
 	}

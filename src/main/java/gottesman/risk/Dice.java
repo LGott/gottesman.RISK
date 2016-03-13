@@ -38,5 +38,4 @@ public class Dice {
 		oneDie.add(die.roll());
 		return oneDie;
 	}
-
 }

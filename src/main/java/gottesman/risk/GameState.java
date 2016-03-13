@@ -12,9 +12,8 @@ public class GameState {
 	public GameState() {
 		players = new ArrayList<Player>();
 		players.add(new Player(Color.GREEN));
-		players.add(new Player(Color.RED));
+		players.add(new Player(Color.WHITE));
 		players.add(new Player(Color.BLUE));
-		players.add(new Player(Color.ORANGE));
 	}
 
 	public Player getActivePlayer() {

@@ -5,17 +5,24 @@ import gottesman.risk.Territory;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 public class DiceBattleView extends JFrame {
 
@@ -31,17 +38,22 @@ public class DiceBattleView extends JFrame {
 	private CombatLogic combatLogic;
 	private List<JLabel> diceLabels;
 
-	public DiceBattleView(final Territory attacker, final Territory defender) {
+	public DiceBattleView(final Territory attacker, final Territory defender) throws IOException {
 
 		setTitle("Risk Battle!");
-		setSize(1000, 200);
+		setSize(3000, 2000);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
 
+		InputStream in = getClass().getResourceAsStream("/Sound/risk music .wav");
+		AudioStream music = new AudioStream(in);
+		AudioPlayer.player.start(music);
+
+		setContentPane(new BattlePanel(attacker, defender));
+
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
-
 		this.combatLogic = new CombatLogic();
 		this.diceLabels = new ArrayList<JLabel>();
 
@@ -49,20 +61,30 @@ public class DiceBattleView extends JFrame {
 		JPanel attackerPanel = new JPanel();
 		JPanel defenderPanel = new JPanel();
 
-		dicePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // TODO Change to BoxLayout
-		attackerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // TODO Change to BoxLayout
-		defenderPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));// TODO Change to BoxLayout
+		dicePanel.setOpaque(false);
+		attackerPanel.setOpaque(false);
+		defenderPanel.setOpaque(false);
+
+		attackerPanel.setPreferredSize(new Dimension(500, 100));
+		defenderPanel.setPreferredSize(new Dimension(500, 100));
+		dicePanel.setPreferredSize(new Dimension(550, 500));
+
+		dicePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 600));
+		attackerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 400, 50));
+		defenderPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 30));
 
 		final ArrayList<JButton> buttonsA = new ArrayList<JButton>();
-		buttonsA.add(this.rollThreeA = new JButton("Roll Three Dice")); // TODO Change to Images
-		buttonsA.add(this.rollTwoA = new JButton("Roll Two Dice"));
-		buttonsA.add(this.rollOneA = new JButton("Roll One Die"));
-		buttonsA.add(this.attackAgain = new JButton("Attack Again"));
-		buttonsA.add(this.forfeit = new JButton("Forfiet"));
+		buttonsA.add(this.rollThreeA = new JButton(new ImageIcon(getClass().getResource("/Images/3Dice.png"))));
+		buttonsA.add(this.rollTwoA = new JButton(new ImageIcon(getClass().getResource("/Images/2Dice.png"))));
+		buttonsA.add(this.rollOneA = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
+		buttonsA.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
+		buttonsA.add(this.forfeit = new JButton(new ImageIcon(getClass().getResource("/Images/Forfeit.png"))));
 
 		final ArrayList<JButton> buttonsD = new ArrayList<JButton>();
-		buttonsD.add(this.rollTwoD = new JButton("Roll Two Dice"));
-		buttonsD.add(this.rollOneD = new JButton("Roll One Die"));
+		buttonsD.add(this.rollTwoD = new JButton(new ImageIcon(getClass().getResource("/Images/2Dice.png"))));
+		buttonsD.add(this.rollOneD = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
+		rollTwoD.setEnabled(false);
+		rollOneD.setEnabled(false);
 
 		for (int i = 0; i < 6; i++) {
 			diceLabels.add(new JLabel(""));
@@ -71,11 +93,24 @@ public class DiceBattleView extends JFrame {
 			dicePanel.add(die);
 		}
 
+		for (JButton but : buttonsA) {
+			for (JButton b : buttonsD) {
+				but.setPreferredSize(new Dimension(450, 150));
+				but.setOpaque(false);
+				but.setContentAreaFilled(false);
+				but.setBorderPainted(false);
+				b.setPreferredSize(new Dimension(450, 150));
+				b.setOpaque(false);
+				b.setContentAreaFilled(false);
+				b.setBorderPainted(false);
+
+			}
+		}
+
 		add(dicePanel, BorderLayout.CENTER);
 		add(attackerPanel, BorderLayout.WEST);
 		add(defenderPanel, BorderLayout.EAST);
 
-		// Just For Testing purposes
 		defender.setBattalions(4);
 		attacker.setBattalions(4);
 
@@ -85,6 +120,8 @@ public class DiceBattleView extends JFrame {
 			ArrayList<Integer> attackerDice;
 
 			public void actionPerformed(ActionEvent e) {
+				rollTwoD.setEnabled(true);
+				rollOneD.setEnabled(true);
 
 				JButton button = (JButton) e.getSource();
 				if (button.equals(rollThreeA) || button.equals(rollTwoA) || button.equals(rollOneA)) {
@@ -96,23 +133,31 @@ public class DiceBattleView extends JFrame {
 				if (button.equals(rollTwoD) || button.equals(rollOneD)) {
 					defenderDice = getDiceSet(button, buttonsD);
 				}
-				if (button.equals(attackAgain)) {
-					if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
-						JOptionPane.showMessageDialog(null, "Not Enough Battalions! Cannot Attack Anymore!");
-						disableButtons(buttonsA);
-						attackAgain.setEnabled(false);
-					} else {
-						attackAgain(buttonsA, buttonsD);
-					}
-				}
 				if (button.equals(forfeit)) {
 					forfeit();
 				}
 				if (e.getSource().equals(rollTwoD) || e.getSource().equals(rollOneD)) {
 					combatLogic.calculateWin(attackerDice, defenderDice, attacker, defender);
+					System.out.println(attackerDice.toString());
+					System.out.println(defenderDice.toString());
 				}
 			}
 		};
+
+		attackAgain.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
+
+					JOptionPane.showMessageDialog(null, "Not Enough Battalions! Cannot Attack Anymore!");
+					rollTwoD.setEnabled(false);
+					rollOneD.setEnabled(false);
+					disableButtons(buttonsA);
+					attackAgain.setEnabled(false);
+				} else {
+					attackAgain(buttonsA, buttonsD);
+				}
+			}
+		});
 
 		for (JButton button : buttonsA) {
 			attackerPanel.add(button);
@@ -130,16 +175,23 @@ public class DiceBattleView extends JFrame {
 		ArrayList<Integer> diceSet = new ArrayList<Integer>();
 
 		if (button.equals(rollThreeA)) {
+
+			diceLabels.get(2).setVisible(true);
+			diceLabels.get(1).setVisible(true);
 			disableButtons(buttons);
 			diceSet = combatLogic.getThreeDice();
 			displayDice(diceSet);
 
 		} else if (button.equals(rollTwoA) || button.equals(rollTwoD)) {
+			diceLabels.get(1).setVisible(true);
+			diceLabels.get(2).setVisible(false);
 			disableButtons(buttons);
 			diceSet = combatLogic.getTwoDice();
 			displayDice(diceSet);
 
 		} else if (button.equals(rollOneA) || button.equals(rollOneD)) {
+			diceLabels.get(2).setVisible(false);
+			diceLabels.get(1).setVisible(false);
 			disableButtons(buttons);
 			diceSet = combatLogic.getOneDie();
 			displayDice(diceSet);
@@ -159,7 +211,7 @@ public class DiceBattleView extends JFrame {
 	}
 
 	private void forfeit() {
-		dispose(); // ?
+		dispose();
 	}
 
 	public void disableButtons(ArrayList<JButton> buttons) {
@@ -172,31 +224,31 @@ public class DiceBattleView extends JFrame {
 
 	private void displayDice(ArrayList<Integer> diceSet) {
 		for (int j = 0; j < diceLabels.size(); j++) {
-			diceLabels.get(j).setText("");
+			diceLabels.get(j).setEnabled(true);
 		}
-		for (int i = 0; i < diceSet.size(); i++) {
 
-			System.out.println(diceSet.get(i));
+		for (int i = 0; i < diceSet.size(); i++) {
 
 			switch (diceSet.get(i)) {
 			// TODO Change text to ImageIcons
 			case 1:
-				diceLabels.get(i).setText("one");
+
+				diceLabels.get(i).setIcon(new ImageIcon(getClass().getResource("/Images/Dice1.png")));
 				break;
 			case 2:
-				diceLabels.get(i).setText("two");
+				diceLabels.get(i).setIcon(new ImageIcon(getClass().getResource("/Images/Dice2.png")));
 				break;
 			case 3:
-				diceLabels.get(i).setText("three");
+				diceLabels.get(i).setIcon(new ImageIcon(getClass().getResource("/Images/Dice3.png")));
 				break;
 			case 4:
-				diceLabels.get(i).setText("Four");
+				diceLabels.get(i).setIcon(new ImageIcon(getClass().getResource("/Images/Dice4.png")));
 				break;
 			case 5:
-				diceLabels.get(i).setText("five");
+				diceLabels.get(i).setIcon(new ImageIcon(getClass().getResource("/Images/Dice5.png")));
 				break;
 			case 6:
-				diceLabels.get(i).setText("six");
+				diceLabels.get(i).setIcon(new ImageIcon(getClass().getResource("/Images/Dice6.png")));
 				break;
 
 			}
@@ -207,6 +259,11 @@ public class DiceBattleView extends JFrame {
 	public static void main(String[] args) {
 		Territory A = new Territory("Testing", 1, 2);
 		Territory B = new Territory("Testing", 1, 4);
-		new DiceBattleView(A, B).setVisible(true);
+		try {
+			new DiceBattleView(A, B).setVisible(true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
