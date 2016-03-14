@@ -7,9 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class DataManager {
 
@@ -28,6 +30,7 @@ public class DataManager {
 		loadTerritories();
 		loadContinents();
 		loadAdjacencies();
+
 	}
 
 	private void loadTerritories() throws NumberFormatException, IOException {
@@ -93,5 +96,15 @@ public class DataManager {
 
 	public Map<String, List<String>> getAdjacencies() {
 		return this.adjacencies;
+	}
+
+	/**
+	 * @param a
+	 * @param b
+	 * @return true if the two Territories are neighbors
+	 */
+	public boolean areNeighbors(Territory a, Territory b) {
+		List<String> neighbors = getAdjacencies().get(a.getName());
+		return neighbors != null && neighbors.contains(b.getName());
 	}
 }

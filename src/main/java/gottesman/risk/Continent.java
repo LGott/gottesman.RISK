@@ -1,5 +1,8 @@
 package gottesman.risk;
 
+import java.util.List;
+import java.util.Set;
+
 public class Continent {
 
 	private String name;
@@ -25,6 +28,16 @@ public class Continent {
 	public String[] getTerritories() {
 		return territories;
 	}
+	
+	public boolean isFullyOccupied(Set<String> occupiedTerritories) {
+		for ( String t : territories ) {
+			if ( !occupiedTerritories.contains(t) ) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
 	@Override
 	public String toString() {
@@ -35,5 +48,6 @@ public class Continent {
 	 * 
 	 * if ((playerCountries.containsAll(territories)) { return this.bonus; } else { return 0; // No bonus given } }
 	 */
+
 
 }

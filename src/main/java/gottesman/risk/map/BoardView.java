@@ -25,22 +25,22 @@ public class BoardView extends JLabel implements ComponentListener, MouseListene
 	private BufferedImage boardImage;
 	private List<TerritoryView> territoryViews;
 	private GameController gameController;
+	private TerritoryViewListener territoryViewListener;
 
-	public BoardView(List<Territory> territories, GameController gameController) {
+	public BoardView(List<Territory> territories) {
 		// null LayoutManager so we can set the positions of the TerritoryViews
 		setLayout(null);
 		
 		loadBoardImage();
 
-		this.gameController = gameController;
-		createTerritoryViews(territories, gameController);
+		createTerritoryViews(territories);
 
 		addComponentListener(this);
 	}
 
-	private void createTerritoryViews(List<Territory> territories, GameController gameController) {
+	private void createTerritoryViews(List<Territory> territories) {
 		this.territoryViews = new ArrayList<TerritoryView>();
-		TerritoryViewListener territoryViewListener = new TerritoryViewListener(gameController);
+		territoryViewListener = new TerritoryViewListener();
 		for (Territory territory : territories) {
 			TerritoryView territoryView = new TerritoryView(territory, territory.getX(), territory.getY());
 			territoryView.addMouseListener(territoryViewListener);
@@ -114,6 +114,10 @@ public class BoardView extends JLabel implements ComponentListener, MouseListene
 
 	public void mouseExited(MouseEvent e) {
 		
+	}
+
+	public void setGameController(GameController gameController) {
+		territoryViewListener.setGameController(gameController);
 	}
 
 }

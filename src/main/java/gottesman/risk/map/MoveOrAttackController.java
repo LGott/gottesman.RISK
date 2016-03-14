@@ -2,17 +2,20 @@ package gottesman.risk.map;
 
 import gottesman.risk.DataManager;
 import gottesman.risk.GameState;
+import gottesman.risk.Player;
 import gottesman.risk.Territory;
 
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * GameController that handles the Move (or Attack) phase of a player's turn.
+ *
+ */
 public class MoveOrAttackController implements GameController {
 
-	private TerritoryView selectedTerritory;
-
+	private TerritoryView selectedTerritoryView;
 	private DataManager dataManager;
-
 	private GameState gameState;
 
 	public MoveOrAttackController(GameState gameState, DataManager dataManager) {
@@ -21,43 +24,58 @@ public class MoveOrAttackController implements GameController {
 	}
 
 	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory) {
-
+		Player activePlayer = gameState.getActivePlayer();
+		
 		// select one of your territories
-		if (territory.isOccupiedBy(gameState.getActivePlayer())) {
-			unselectSelectedTerritory();
-			selectedTerritory = territoryView;
-			selectedTerritory.select();
+		if (territory.isOccupiedBy(activePlayer)) {
+			selectTerritory(territoryView);
 		}
 		// select a territory to occupy
-		else if (selectedTerritory != null) {
-			List<String> neighbors = dataManager.getAdjacencies().get(selectedTerritory.getTerritory().getName());
+		else if (selectedTerritoryView != null) {
+			Territory selectedTerritory = selectedTerritoryView.getTerritory();
 			// is it a neighbor?
-			if ((neighbors != null) && neighbors.contains(territory.getName())) {
-				if (territory.isOccupied() && (selectedTerritory.getTerritory().getBattalions() > 1)) {
-					// Can only attack if has more than one battalion
-
-					try {
-						new DiceBattleView(selectedTerritory.getTerritory(), territory).setVisible(true);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
-					if (territory.getBattalions() == 0) {
-						// Attacker occupies territory and moves battalions
-					} else {
-						// move n-1 battalions
-						territory.setColor(gameState.getActivePlayer().getColor());
-						territory.setBattalions(selectedTerritory.getTerritory().getBattalions() - 1);
-						territoryView.repaint();
-						selectedTerritory.getTerritory().setBattalions(1);
-						unselectSelectedTerritory();
-						selectedTerritory = territoryView;
-						selectedTerritory.select();
-					}
+			if (dataManager.areNeighbors(selectedTerritory, territory)) {
+				if (canBattle(selectedTerritory, territory)) {
+					startBattle(territory, selectedTerritory);
+				} else {
+					captureTerritory(activePlayer, selectedTerritory, territoryView, territory);
 				}
 			}
 		}
 
+	}
+
+	private void captureTerritory(Player activePlayer, Territory selectedTerritory, TerritoryView territoryView,
+			Territory territory) {
+		// move n-1 battalions
+		territory.occupy(activePlayer);
+		selectedTerritory.moveBattalionsTo(territory);
+		
+		selectedTerritoryView.repaint();
+		territoryView.repaint();
+		
+		selectTerritory(territoryView);
+	}
+
+	private void startBattle(Territory territory, Territory selectedTerritory) {
+		// Can only attack if has more than one battalion
+		try {
+			new DiceBattleView(selectedTerritory, territory).setVisible(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private boolean canBattle(Territory selectedTerritory, Territory territory) {
+		return territory.isOccupied() && 
+				selectedTerritory.getPlayer() != territory.getPlayer() && 
+				selectedTerritory.getBattalions() > 1;
+	}
+
+	private void selectTerritory(TerritoryView territoryView) {
+		unselectSelectedTerritory();
+		selectedTerritoryView = territoryView;
+		selectedTerritoryView.setSelected(true);
 	}
 
 	public void onClickMap(BoardView boardView) {
@@ -65,9 +83,9 @@ public class MoveOrAttackController implements GameController {
 	}
 
 	private void unselectSelectedTerritory() {
-		if (selectedTerritory != null) {
-			selectedTerritory.unselect();
-			selectedTerritory = null;
+		if (selectedTerritoryView != null) {
+			selectedTerritoryView.setSelected(false);
+			selectedTerritoryView = null;
 		}
 	}
 

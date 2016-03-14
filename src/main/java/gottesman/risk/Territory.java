@@ -1,6 +1,7 @@
 package gottesman.risk;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class Territory implements Comparable<Territory> {
 
@@ -9,7 +10,6 @@ public class Territory implements Comparable<Territory> {
 	private int y;
 
 	private Player player;
-	private Color color;
 	private int battalions = 0;
 
 	public Territory(String name, int x, int y) {
@@ -30,21 +30,13 @@ public class Territory implements Comparable<Territory> {
 		return this.y;
 	}
 
-	public void occupy(Player player, int battalions) {
+	public void occupy(Player player) {
 		this.player = player;
-		this.battalions = battalions;
 	}
-
-	public void setColor(Color color) {
-		this.color = player.getColor();
-	}
-
-	public void testSetColor(Color color) {
-		this.color = color;
-	}
-
-	public Color getColor() {
-		return color;
+	
+	public void unoccupy() {
+		this.player = null;
+		this.battalions = 0;
 	}
 
 	public int getBattalions() {
@@ -52,6 +44,10 @@ public class Territory implements Comparable<Territory> {
 	}
 
 	public void setBattalions(int battalions) {
+		this.battalions = battalions;
+	}
+	
+	public void increaseBattalions( int battalions ) {
 		this.battalions += battalions;
 	}
 
@@ -86,12 +82,37 @@ public class Territory implements Comparable<Territory> {
 	}
 
 	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+
+	@Override
 	public String toString() {
 		return this.name + " " + this.x + " " + this.y;
 	}
 
 	public int compareTo(Territory other) {
 		return this.name.compareTo(other.getName());
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public Color getColor() {
+		return player == null ? null : player.getColor();
+	}
+	
+	/**
+	 * Move n-1 battalions to the other Territory
+	 * @param other
+	 */
+	public void moveBattalionsTo( Territory other ) {
+		if ( battalions <= 0 ) {
+			return;
+		}
+		other.increaseBattalions(battalions - 1);
+		battalions = 1;
 	}
 
 }

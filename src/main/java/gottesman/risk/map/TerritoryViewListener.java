@@ -6,15 +6,14 @@ import java.awt.event.MouseMotionListener;
 
 public class TerritoryViewListener implements MouseListener {
 
-	private GameController gameActionListener;
+	private GameController gameController;
 
-	public TerritoryViewListener(GameController gameActionListener) {
-		this.gameActionListener = gameActionListener;
+	public TerritoryViewListener() {
 	}
 
 	public void mouseClicked(MouseEvent e) {
 		TerritoryView territoryView = (TerritoryView) e.getSource();
-		gameActionListener.onClickTerritory(null, territoryView, territoryView.getTerritory());
+		gameController.onClickTerritory(null, territoryView, territoryView.getTerritory());
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -25,12 +24,16 @@ public class TerritoryViewListener implements MouseListener {
 
 	public void mouseEntered(MouseEvent e) {
 		TerritoryView territoryView = (TerritoryView) e.getSource();
-		territoryView.highlight();
+		territoryView.setHighLighted(true);
 	}
 
 	public void mouseExited(MouseEvent e) {
 		TerritoryView territoryView = (TerritoryView) e.getSource();
-		//territoryView.deselect();
+		territoryView.setHighLighted(false);
+	}
+
+	public void setGameController(GameController gameController) {
+		this.gameController = gameController;
 	}
 
 }
