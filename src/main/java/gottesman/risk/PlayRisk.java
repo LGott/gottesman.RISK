@@ -56,8 +56,6 @@ public class PlayRisk extends JFrame implements GameStateListener {
 
 		gameState.startGame();
 		
-		onPhaseChange(GameState.Phase.DEPLOY);
-		
 		// InputStream in = new FileInputStream("Sound/risk music .wav");
 		// AudioStream music = new AudioStream(in);
 		// AudioPlayer.player.start(music);

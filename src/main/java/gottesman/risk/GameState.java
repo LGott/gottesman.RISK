@@ -36,7 +36,6 @@ public class GameState {
 		for ( int i=0; i<numPlayers; i++ ) {
 			players.add( new Player(colors[i]) );
 		}
-		phase = Phase.DEPLOY;
 		this.dataManager = dataManager;
 		this.gameStateListener = gameStateListener;
 	}
@@ -68,6 +67,10 @@ public class GameState {
 			}
 		}
 
+		// Set up the correct player by setting it as the last player and then incrementing the phase.
+		currentPlayer = players.size();
+		phase = Phase.FORTIFY;
+		nextPhase();
 	}
 
 	public Player getActivePlayer() {
