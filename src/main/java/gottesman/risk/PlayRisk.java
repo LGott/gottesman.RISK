@@ -7,9 +7,12 @@ import gottesman.risk.map.MoveOrAttackController;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -25,7 +28,7 @@ public class PlayRisk extends JFrame implements GameStateListener {
 	private DataManager dataManager;
 	private BoardView boardView;
 	private GameState gameState;
-	private JLabel phaseLabel;
+	private JButton phaseButton;
 
 	public PlayRisk() throws IOException {
 
@@ -50,9 +53,14 @@ public class PlayRisk extends JFrame implements GameStateListener {
 
 		container.add(boardView, BorderLayout.CENTER);
 		
-		phaseLabel = new JLabel();
-		phaseLabel.setOpaque(true);
-		container.add(phaseLabel, BorderLayout.SOUTH);
+		phaseButton = new JButton();
+		phaseButton.setOpaque(true);
+		phaseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameState.nextPhase();
+			}
+		});
+		container.add(phaseButton, BorderLayout.SOUTH);
 
 		gameState.startGame();
 		
@@ -75,8 +83,8 @@ public class PlayRisk extends JFrame implements GameStateListener {
 			break;
 		}
 		
-		phaseLabel.setBackground(gameState.getActivePlayer().getColor());
-		phaseLabel.setText(phase.name());
+		phaseButton.setBackground(gameState.getActivePlayer().getColor());
+		phaseButton.setText(phase.name());
 	}
 
 	public static void main(String[] args) {
