@@ -18,7 +18,7 @@ public class GameState {
 	}
 
 	private static final Color colors[] = new Color[] { Color.WHITE, Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA,
-		Color.CYAN };
+			Color.CYAN };
 
 	private List<Player> players;
 	private int currentPlayer;
@@ -55,7 +55,7 @@ public class GameState {
 			int battalionsLeft = battalionsPerPlayer;
 			while (battalionsLeft > 0) {
 				Territory t = territories.get(territoryIndex);
-				int maxBattalions = Math.min(15, battalionsLeft);
+				int maxBattalions = Math.min(10, battalionsLeft);
 				int battalions = random.nextInt(maxBattalions) + 1;
 				t.occupy(player);
 				t.setBattalions(battalions);
