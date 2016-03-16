@@ -17,8 +17,8 @@ public class BattlePanel extends JPanel {
 
 	public BattlePanel(Territory attacker, Territory defender) {
 
-		//attacker.testSetColor(Color.GREEN);
-		//defender.testSetColor(Color.WHITE);
+		// attacker.occupy(new Player(Color.WHITE));
+		// defender.occupy(new Player(Color.GREEN));
 		try {
 
 			if (attacker.getColor().equals(Color.BLUE)) {

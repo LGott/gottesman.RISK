@@ -10,11 +10,9 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class PlayRisk extends JFrame implements GameStateListener {
 
@@ -44,15 +42,15 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		dataManager = new DataManager();
 		boardView = new BoardView(dataManager.getTerritories());
 
-		gameState = new GameState(dataManager, this, 2);
+		gameState = new GameState(dataManager, this, 3);
 		deployingController = new DeployingController(gameState);
 		moveOrAttackController = new MoveOrAttackController(gameState, dataManager);
 		fortifyController = new FortifyController(gameState, dataManager);
-		
+
 		boardView.setGameController(deployingController);
 
 		container.add(boardView, BorderLayout.CENTER);
-		
+
 		phaseButton = new JButton();
 		phaseButton.setOpaque(true);
 		phaseButton.addActionListener(new ActionListener() {
@@ -63,15 +61,15 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		container.add(phaseButton, BorderLayout.SOUTH);
 
 		gameState.startGame();
-		
+
 		// InputStream in = new FileInputStream("Sound/risk music .wav");
 		// AudioStream music = new AudioStream(in);
 		// AudioPlayer.player.start(music);
 
 	}
-	
+
 	public void onPhaseChange(GameState.Phase phase) {
-		switch(phase) {
+		switch (phase) {
 		case DEPLOY:
 			boardView.setGameController(deployingController);
 			break;
@@ -82,7 +80,7 @@ public class PlayRisk extends JFrame implements GameStateListener {
 			boardView.setGameController(fortifyController);
 			break;
 		}
-		
+
 		phaseButton.setBackground(gameState.getActivePlayer().getColor());
 		phaseButton.setText(phase.name());
 	}

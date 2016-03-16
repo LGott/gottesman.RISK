@@ -6,7 +6,8 @@ import gottesman.risk.Player;
 import gottesman.risk.Territory;
 
 import java.io.IOException;
-import java.util.List;
+
+import javax.swing.JOptionPane;
 
 /**
  * GameController that handles the Move (or Attack) phase of a player's turn.
@@ -25,7 +26,7 @@ public class MoveOrAttackController implements GameController {
 
 	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory) {
 		Player activePlayer = gameState.getActivePlayer();
-		
+
 		// select one of your territories
 		if (territory.isOccupiedBy(activePlayer)) {
 			selectTerritory(territoryView);
@@ -38,22 +39,28 @@ public class MoveOrAttackController implements GameController {
 				if (canBattle(selectedTerritory, territory)) {
 					startBattle(territory, selectedTerritory);
 				} else {
-					captureTerritory(activePlayer, selectedTerritory, territoryView, territory);
+					if (!(selectedTerritory.getBattalions() <= 1)) {
+						captureTerritory(activePlayer, selectedTerritory, territoryView, territory);
+					}
 				}
 			}
 		}
-
 	}
 
 	private void captureTerritory(Player activePlayer, Territory selectedTerritory, TerritoryView territoryView,
 			Territory territory) {
 		// move n-1 battalions
-		territory.occupy(activePlayer);
-		selectedTerritory.moveBattalionsTo(territory);
-		
+
+		int battalionNum = Integer.parseInt(JOptionPane.showInputDialog(null,
+				"Enter the amount of battalions you would like to move."));
+		if (battalionNum >= selectedTerritory.getBattalions()) {
+			JOptionPane.showMessageDialog(selectedTerritoryView, "Cannot move this amount of battalions. Try again.");
+		} else {
+			territory.occupy(activePlayer);
+			selectedTerritory.moveBattalionsTo(territory, battalionNum);
+		}
 		selectedTerritoryView.repaint();
 		territoryView.repaint();
-		
 		selectTerritory(territoryView);
 	}
 
@@ -67,9 +74,8 @@ public class MoveOrAttackController implements GameController {
 	}
 
 	private boolean canBattle(Territory selectedTerritory, Territory territory) {
-		return territory.isOccupied() && 
-				selectedTerritory.getPlayer() != territory.getPlayer() && 
-				selectedTerritory.getBattalions() > 1;
+		return territory.isOccupied() && (selectedTerritory.getPlayer() != territory.getPlayer())
+				&& (selectedTerritory.getBattalions() > 1);
 	}
 
 	private void selectTerritory(TerritoryView territoryView) {

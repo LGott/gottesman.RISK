@@ -1,7 +1,6 @@
 package gottesman.risk;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 public class Territory implements Comparable<Territory> {
 
@@ -33,7 +32,7 @@ public class Territory implements Comparable<Territory> {
 	public void occupy(Player player) {
 		this.player = player;
 	}
-	
+
 	public void unoccupy() {
 		this.player = null;
 		this.battalions = 0;
@@ -46,8 +45,8 @@ public class Territory implements Comparable<Territory> {
 	public void setBattalions(int battalions) {
 		this.battalions = battalions;
 	}
-	
-	public void increaseBattalions( int battalions ) {
+
+	public void increaseBattalions(int battalions) {
 		this.battalions += battalions;
 	}
 
@@ -98,21 +97,22 @@ public class Territory implements Comparable<Territory> {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public Color getColor() {
 		return player == null ? null : player.getColor();
 	}
-	
+
 	/**
 	 * Move n-1 battalions to the other Territory
+	 * 
 	 * @param other
 	 */
-	public void moveBattalionsTo( Territory other ) {
-		if ( battalions <= 0 ) {
+	public void moveBattalionsTo(Territory other, int battalionNum) {
+		if (battalions <= 0) {
 			return;
 		}
-		other.increaseBattalions(battalions - 1);
-		battalions = 1;
+		other.increaseBattalions(battalionNum);
+		battalions -= battalionNum;
 	}
 
 }

@@ -9,19 +9,16 @@ import java.util.Random;
 import java.util.Set;
 
 public class GameState {
-	
+
 	/**
 	 * Represents the phases of turn;
 	 */
 	public enum Phase {
-		DEPLOY,
-		MOVE,
-		FORTIFY
+		DEPLOY, MOVE, FORTIFY
 	}
-	
-	private static final Color colors[] = new Color[] {
-			Color.GREEN, Color.RED, Color.WHITE, Color.BLUE, Color.MAGENTA, Color.CYAN
-	};
+
+	private static final Color colors[] = new Color[] { Color.WHITE, Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA,
+		Color.CYAN };
 
 	private List<Player> players;
 	private int currentPlayer;
@@ -33,13 +30,13 @@ public class GameState {
 
 	public GameState(DataManager dataManager, GameStateListener gameStateListener, int numPlayers) {
 		players = new ArrayList<Player>();
-		for ( int i=0; i<numPlayers; i++ ) {
-			players.add( new Player(colors[i]) );
+		for (int i = 0; i < numPlayers; i++) {
+			players.add(new Player(colors[i]));
 		}
 		this.dataManager = dataManager;
 		this.gameStateListener = gameStateListener;
 	}
-	
+
 	/**
 	 * Divide up the map randomly
 	 */
@@ -58,7 +55,7 @@ public class GameState {
 			int battalionsLeft = battalionsPerPlayer;
 			while (battalionsLeft > 0) {
 				Territory t = territories.get(territoryIndex);
-				int maxBattalions = Math.min(10, battalionsLeft);
+				int maxBattalions = Math.min(15, battalionsLeft);
 				int battalions = random.nextInt(maxBattalions) + 1;
 				t.occupy(player);
 				t.setBattalions(battalions);
@@ -76,12 +73,12 @@ public class GameState {
 	public Player getActivePlayer() {
 		return players.get(currentPlayer);
 	}
-	
+
 	/**
-	 * Increments the phase of the turn or changes to the next player 
+	 * Increments the phase of the turn or changes to the next player
 	 */
 	public Phase nextPhase() {
-		switch(phase) {
+		switch (phase) {
 		case DEPLOY:
 			phase = Phase.MOVE;
 			break;
@@ -105,21 +102,21 @@ public class GameState {
 		Player player = this.getActivePlayer();
 		List<Territory> territories = dataManager.getTerritories();
 		Set<String> occupiedTerritories = new HashSet<String>();
-		for ( Territory t : territories ) {
-			if ( t.isOccupiedBy(player) ) {
+		for (Territory t : territories) {
+			if (t.isOccupiedBy(player)) {
 				occupiedTerritories.add(t.getName());
 			}
 		}
-		
+
 		int battalionsToDeploy = (int) Math.floor(occupiedTerritories.size() / 3.00);
-		
+
 		List<Continent> continents = dataManager.getContinents();
-		for ( Continent c : continents ) {
-			if ( c.isFullyOccupied( occupiedTerritories ) ) {
+		for (Continent c : continents) {
+			if (c.isFullyOccupied(occupiedTerritories)) {
 				battalionsToDeploy += c.getBonus();
 			}
 		}
-		
+
 		player.setBattalionsToDeploy(Math.max(battalionsToDeploy, 3));
 	}
 

@@ -14,7 +14,8 @@ public class Player {
 		this.color = color;
 		this.cards = new ArrayList<BattalionType>();
 		this.territories = new ArrayList<Territory>();
-		this.battalionsToDeploy = 0; 	}
+		this.battalionsToDeploy = 0;
+	}
 
 	public ArrayList<BattalionType> getCards() {
 		return cards;
@@ -37,12 +38,12 @@ public class Player {
 	}
 
 	public int getBattalionsToDeploy() {
+
 		return battalionsToDeploy;
 	}
 
 	public void setBattalionsToDeploy(int battalionsToDeploy) {
 		this.battalionsToDeploy = battalionsToDeploy;
 	}
-	
 
 }
