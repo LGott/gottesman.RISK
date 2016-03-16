@@ -103,7 +103,7 @@ public class Territory implements Comparable<Territory> {
 	}
 
 	/**
-	 * Move n-1 battalions to the other Territory
+	 * Move battalions to the other Territory
 	 * 
 	 * @param other
 	 */

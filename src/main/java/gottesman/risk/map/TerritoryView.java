@@ -50,7 +50,7 @@ public class TerritoryView extends JLabel {
 			g.setColor(territory.getPlayer().getColor());
 			g.fillOval(0, 0, WIDTH, HEIGHT);
 			setText(String.valueOf(territory.getBattalions()));
-			
+
 			if (selected) {
 				g.setColor(SELECTED_COLOR);
 				g.drawOval(0, 0, WIDTH, HEIGHT);
@@ -58,8 +58,7 @@ public class TerritoryView extends JLabel {
 
 			// After you draw the oval, then draw the number.
 			super.paintComponent(g);
-		}
-		else if (highlighted) {
+		} else if (highlighted) {
 			g.setColor(HIGHLIGHT_COLOR);
 			g.drawOval(0, 0, WIDTH, HEIGHT);
 		}
@@ -70,7 +69,7 @@ public class TerritoryView extends JLabel {
 		this.highlighted = highlighted;
 		repaint();
 	}
-	
+
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 		repaint();

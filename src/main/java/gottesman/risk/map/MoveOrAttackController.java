@@ -49,12 +49,13 @@ public class MoveOrAttackController implements GameController {
 
 	private void captureTerritory(Player activePlayer, Territory selectedTerritory, TerritoryView territoryView,
 			Territory territory) {
-		// move n-1 battalions
+		// move battalions
 
 		int battalionNum = Integer.parseInt(JOptionPane.showInputDialog(null,
 				"Enter the amount of battalions you would like to move."));
 		if (battalionNum >= selectedTerritory.getBattalions()) {
 			JOptionPane.showMessageDialog(selectedTerritoryView, "Cannot move this amount of battalions. Try again.");
+			return;
 		} else {
 			territory.occupy(activePlayer);
 			selectedTerritory.moveBattalionsTo(territory, battalionNum);

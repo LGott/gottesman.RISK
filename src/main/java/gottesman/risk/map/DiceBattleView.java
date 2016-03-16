@@ -151,8 +151,12 @@ public class DiceBattleView extends JFrame {
 						JOptionPane.showMessageDialog(null, "Attacker Wins! " + attacker.getName() + " has conquered "
 								+ defender.getName());
 						dispose();
-
 					}
+					if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
+						JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");
+						attackAgain.setEnabled(false);
+					}
+
 					System.out.println(attackerDice.toString());
 					System.out.println(defenderDice.toString());
 					System.out.println(attacker.getBattalions());
@@ -163,16 +167,12 @@ public class DiceBattleView extends JFrame {
 
 		attackAgain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
 
-					JOptionPane.showMessageDialog(null, "Not Enough Battalions! Cannot Attack Anymore!");
-					rollTwoD.setEnabled(false);
-					rollOneD.setEnabled(false);
-					disableButtons(buttonsA);
-					attackAgain.setEnabled(false);
-				} else {
-					attackAgain(buttonsA, buttonsD);
-				}
+				rollTwoD.setEnabled(false);
+				rollOneD.setEnabled(false);
+				disableButtons(buttonsA);
+				// attackAgain.setEnabled(false);
+				attackAgain(buttonsA, buttonsD);
 			}
 		});
 
