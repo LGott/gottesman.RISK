@@ -19,8 +19,8 @@ public class GameState {
 		DEPLOY, MOVE, FORTIFY
 	}
 
-	private static final Color colors[] = new Color[] { Color.WHITE, Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA,
-			Color.CYAN };
+	private static final Color colors[] = new Color[] { Color.WHITE, Color.GREEN, Color.CYAN, Color.BLUE, Color.RED,
+			Color.MAGENTA, };
 
 	private List<Player> players;
 	private int currentPlayer;

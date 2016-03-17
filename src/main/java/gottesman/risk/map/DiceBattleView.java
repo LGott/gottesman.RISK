@@ -85,7 +85,7 @@ public class DiceBattleView extends JFrame {
 		buttonsA.add(this.rollOneA = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
 
 		buttonPanel
-				.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
+		.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
 		buttonPanel.add(this.forfeit = new JButton(new ImageIcon(getClass().getResource("/Images/Forfeit.png"))));
 
 		final ArrayList<JButton> buttonsD = new ArrayList<JButton>();
@@ -161,7 +161,7 @@ public class DiceBattleView extends JFrame {
 						dispose();
 
 					}
-					if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
+					if (attacker.getBattalions() == 1) { // If attacker has 1 battalion, attack is over
 						JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");
 						attackAgain.setEnabled(false);
 					}

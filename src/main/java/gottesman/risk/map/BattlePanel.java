@@ -17,11 +17,9 @@ public class BattlePanel extends JPanel {
 
 	public BattlePanel(Territory attacker, Territory defender) {
 
-		// attacker.occupy(new Player(Color.WHITE));
-		// defender.occupy(new Player(Color.GREEN));
 		try {
 
-			if (attacker.getColor().equals(Color.BLUE)) {
+			if (attacker.getColor().equals(Color.CYAN)) {
 				if (defender.getColor().equals(Color.WHITE)) {
 					getImage("/Images/BlueVsWhite.jpg");
 				} else if (defender.getColor().equals(Color.GREEN)) {
@@ -30,13 +28,13 @@ public class BattlePanel extends JPanel {
 			} else if (attacker.getColor().equals(Color.GREEN)) {
 				if (defender.getColor().equals(Color.WHITE)) {
 					getImage("/Images/GreenVsWhite.jpg");
-				} else if (defender.getColor().equals(Color.BLUE)) {
+				} else if (defender.getColor().equals(Color.CYAN)) {
 					getImage("/Images/GreenVsBlue.jpg");
 				}
 			} else if (attacker.getColor().equals(Color.WHITE)) {
 				if (defender.getColor().equals(Color.GREEN)) {
 					getImage("/Images/WhiteVsGreen.jpg");
-				} else if (defender.getColor().equals(Color.BLUE)) {
+				} else if (defender.getColor().equals(Color.CYAN)) {
 					getImage("/Images/WhiteVsBlue.jpg");
 				}
 			}
