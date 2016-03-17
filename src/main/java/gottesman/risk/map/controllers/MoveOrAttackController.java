@@ -1,9 +1,12 @@
-package gottesman.risk.map;
+package gottesman.risk.map.controllers;
 
 import gottesman.risk.DataManager;
 import gottesman.risk.GameState;
 import gottesman.risk.Player;
 import gottesman.risk.Territory;
+import gottesman.risk.battle.DiceBattleView;
+import gottesman.risk.map.BoardView;
+import gottesman.risk.map.TerritoryView;
 
 import java.io.IOException;
 

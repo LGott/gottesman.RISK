@@ -1,7 +1,9 @@
-package gottesman.risk;
+package gottesman.risk.battle;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import gottesman.risk.Territory;
 
 public class CombatLogic {
 

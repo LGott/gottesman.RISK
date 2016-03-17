@@ -1,4 +1,4 @@
-package gottesman.risk;
+package gottesman.risk.battle;
 
 public class Die {
 

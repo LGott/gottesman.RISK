@@ -1,6 +1,8 @@
-package gottesman.risk.map;
+package gottesman.risk.map.controllers;
 
 import gottesman.risk.Territory;
+import gottesman.risk.map.BoardView;
+import gottesman.risk.map.TerritoryView;
 
 public interface GameController {
 

@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import gottesman.risk.map.controllers.GameController;
+
 public class TerritoryViewListener implements MouseListener {
 
 	private GameController gameController;

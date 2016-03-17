@@ -1,9 +1,9 @@
 package gottesman.risk;
 
 import gottesman.risk.map.BoardView;
-import gottesman.risk.map.DeployingController;
-import gottesman.risk.map.FortifyController;
-import gottesman.risk.map.MoveOrAttackController;
+import gottesman.risk.map.controllers.DeployingController;
+import gottesman.risk.map.controllers.FortifyController;
+import gottesman.risk.map.controllers.MoveOrAttackController;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

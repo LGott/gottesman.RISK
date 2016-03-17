@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import gottesman.risk.Territory;
+import gottesman.risk.map.controllers.GameController;
 
 public class BoardView extends JLabel implements ComponentListener, MouseListener {
 

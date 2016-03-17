@@ -1,6 +1,5 @@
-package gottesman.risk.map;
+package gottesman.risk.battle;
 
-import gottesman.risk.CombatLogic;
 import gottesman.risk.Territory;
 
 import java.awt.BorderLayout;

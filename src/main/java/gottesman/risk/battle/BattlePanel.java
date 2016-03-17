@@ -1,4 +1,4 @@
-package gottesman.risk.map;
+package gottesman.risk.battle;
 
 import gottesman.risk.Territory;
 

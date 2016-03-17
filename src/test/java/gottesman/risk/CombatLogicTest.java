@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 
+import gottesman.risk.battle.CombatLogic;
+import gottesman.risk.battle.Dice;
+
 public class CombatLogicTest {
 
 	@Test

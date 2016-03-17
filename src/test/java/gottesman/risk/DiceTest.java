@@ -4,6 +4,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import gottesman.risk.battle.Dice;
+
 
 public class DiceTest {
 	@Test

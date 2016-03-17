@@ -1,4 +1,4 @@
-package gottesman.risk;
+package gottesman.risk.battle;
 
 import java.util.ArrayList;
 
