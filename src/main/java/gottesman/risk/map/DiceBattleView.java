@@ -45,7 +45,7 @@ public class DiceBattleView extends JFrame {
 
 		setTitle("Risk Battle!");
 		setSize(WIDTH, HEIGHT);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
 
@@ -80,12 +80,13 @@ public class DiceBattleView extends JFrame {
 		defenderPanel.setPreferredSize(new Dimension(200, 30));
 
 		final ArrayList<JButton> buttonsA = new ArrayList<JButton>();
-		buttonsA.add(this.rollThreeA = new JButton(new ImageIcon(getClass().getResource("/Images/3dice (1).png"))));
+		buttonsA.add(this.rollThreeA = new JButton(new ImageIcon(getClass().getResource("/Images/3Dice.png"))));
 		buttonsA.add(this.rollTwoA = new JButton(new ImageIcon(getClass().getResource("/Images/2Dice.png"))));
 		buttonsA.add(this.rollOneA = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
 
-		buttonPanel.add(this.attackAgain = new JButton("Attack Again"));
-		buttonPanel.add(this.forfeit = new JButton("Forfeit"));
+		buttonPanel
+				.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
+		buttonPanel.add(this.forfeit = new JButton(new ImageIcon(getClass().getResource("/Images/Forfeit.png"))));
 
 		final ArrayList<JButton> buttonsD = new ArrayList<JButton>();
 		buttonsD.add(this.rollTwoD = new JButton(new ImageIcon(getClass().getResource("/Images/2Dice.png"))));
@@ -113,6 +114,17 @@ public class DiceBattleView extends JFrame {
 
 			}
 		}
+
+		for (JLabel die : diceLabels) {
+			die.setOpaque(false);
+		}
+
+		attackAgain.setOpaque(false);
+		attackAgain.setContentAreaFilled(false);
+		attackAgain.setBorderPainted(false);
+		forfeit.setOpaque(false);
+		forfeit.setContentAreaFilled(false);
+		forfeit.setBorderPainted(false);
 
 		add(dicePanel, BorderLayout.CENTER);
 		add(attackerPanel, BorderLayout.WEST);
@@ -153,11 +165,6 @@ public class DiceBattleView extends JFrame {
 						JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");
 						attackAgain.setEnabled(false);
 					}
-
-					System.out.println(attackerDice.toString());
-					System.out.println(defenderDice.toString());
-					System.out.println(attacker.getBattalions());
-					System.out.println(defender.getBattalions());
 				}
 			}
 		};
@@ -242,10 +249,6 @@ public class DiceBattleView extends JFrame {
 	}
 
 	private void displayDice(ArrayList<Integer> diceSet) {
-		for (JLabel die : diceLabels) {
-			die.setEnabled(true);
-			die.setOpaque(true);
-		}
 
 		for (int i = 0; i < diceSet.size(); i++) {
 
