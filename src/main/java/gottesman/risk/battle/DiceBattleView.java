@@ -33,6 +33,8 @@ public class DiceBattleView extends JFrame {
 
 	private JButton attackAgain;
 	private JButton forfeit;
+	private JLabel battalionsA;
+	private JLabel battalionsD;
 
 	private CombatLogic combatLogic;
 	private List<JLabel> diceLabels;
@@ -84,12 +86,17 @@ public class DiceBattleView extends JFrame {
 		buttonsA.add(this.rollOneA = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
 
 		buttonPanel
-		.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
+				.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
 		buttonPanel.add(this.forfeit = new JButton(new ImageIcon(getClass().getResource("/Images/Forfeit.png"))));
+		buttonPanel.add(this.battalionsA = new JLabel(attacker.getBattalions() + " Battalions"));
+
+		battalionsD = new JLabel(defender.getBattalions() + " Battalions");
+		defenderPanel.add(battalionsD);
 
 		final ArrayList<JButton> buttonsD = new ArrayList<JButton>();
 		buttonsD.add(this.rollTwoD = new JButton(new ImageIcon(getClass().getResource("/Images/2Dice.png"))));
 		buttonsD.add(this.rollOneD = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
+
 		rollTwoD.setEnabled(false);
 		rollOneD.setEnabled(false);
 
@@ -102,15 +109,12 @@ public class DiceBattleView extends JFrame {
 
 		for (JButton but : buttonsA) {
 			for (JButton b : buttonsD) {
-				// but.setPreferredSize(new Dimension(70, 20));
 				but.setOpaque(false);
 				but.setContentAreaFilled(false);
 				but.setBorderPainted(false);
-				// b.setPreferredSize(new Dimension(WIDTH / 10, HEIGHT / 6));
 				b.setOpaque(false);
 				b.setContentAreaFilled(false);
 				b.setBorderPainted(false);
-
 			}
 		}
 
@@ -153,6 +157,8 @@ public class DiceBattleView extends JFrame {
 				}
 				if (e.getSource().equals(rollTwoD) || e.getSource().equals(rollOneD)) {
 					combatLogic.calculateWin(attackerDice, defenderDice, attacker, defender);
+					battalionsA.setText((attacker.getBattalions() + " battalion(s) left"));
+					battalionsD.setText((defender.getBattalions() + " battalion(s) left"));
 					repaint();
 					if (defender.getBattalions() < 1) {
 						JOptionPane.showMessageDialog(null, "Attacker Wins! " + attacker.getName() + " has conquered "
