@@ -49,23 +49,38 @@ public class GameState {
 		final Random random = new Random();
 		List<Territory> territories = dataManager.getTerritories();
 		Collections.shuffle(territories);
-		int territoryIndex = 0;
 
 		// For each player, occupy a random list of territories with a
 		// random amount of battalions in each territory
-
+		
+		int start = 0;
+		int territoriesPerPlayer = territories.size() / numPlayers;
 		for (Player player : players) {
+			
+			List<Territory> list = territories.subList(start, start+territoriesPerPlayer);
 			int battalionsLeft = battalionsPerPlayer;
-			while ((battalionsLeft > 0)) {
-				Territory t = territories.get(territoryIndex);
+			
+			// give every territory one battalion to start
+			for ( Territory t : list ) {
+				t.occupy(player);
+				t.setBattalions(1);
+				player.addTerritory(t);
+				battalionsLeft--;
+			}
+
+			// deploy a random amount of battalions
+			for ( Territory t : list ) {
 				int maxBattalions = Math.min(6, battalionsLeft);
 				int battalions = random.nextInt(maxBattalions) + 1;
-				t.occupy(player);
-				t.setBattalions(battalions);
-				player.addTerritory(t);
+				t.increaseBattalions(battalions);
 				battalionsLeft -= battalions;
-				territoryIndex++;
+				if (battalionsLeft <= 0) {
+					break;
+				}
 			}
+			
+			start += territoriesPerPlayer;
+			
 		}
 
 		// Set up the correct player by setting it as the last player and then incrementing the phase.
