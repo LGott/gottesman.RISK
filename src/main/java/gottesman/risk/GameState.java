@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 public class GameState {
 
 	/**
@@ -51,14 +53,16 @@ public class GameState {
 
 		// For each player, occupy a random list of territories with a
 		// random amount of battalions in each territory
+
 		for (Player player : players) {
 			int battalionsLeft = battalionsPerPlayer;
-			while (battalionsLeft > 0) {
+			while ((battalionsLeft > 0)) {
 				Territory t = territories.get(territoryIndex);
-				int maxBattalions = Math.min(10, battalionsLeft);
+				int maxBattalions = Math.min(6, battalionsLeft);
 				int battalions = random.nextInt(maxBattalions) + 1;
 				t.occupy(player);
 				t.setBattalions(battalions);
+				player.addTerritory(t);
 				battalionsLeft -= battalions;
 				territoryIndex++;
 			}
@@ -105,6 +109,10 @@ public class GameState {
 		for (Territory t : territories) {
 			if (t.isOccupiedBy(player)) {
 				occupiedTerritories.add(t.getName());
+			}
+			// Check for winner before each turn starts
+			if (occupiedTerritories.containsAll(territories)) {
+				JOptionPane.showMessageDialog(null, player + " has conquered the world. Game over!");
 			}
 		}
 

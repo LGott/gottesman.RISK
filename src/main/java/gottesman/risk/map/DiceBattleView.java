@@ -1,6 +1,7 @@
 package gottesman.risk.map;
 
 import gottesman.risk.CombatLogic;
+import gottesman.risk.MusicThread;
 import gottesman.risk.Territory;
 
 import java.awt.BorderLayout;
@@ -10,7 +11,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 public class DiceBattleView extends JFrame {
 
@@ -37,6 +34,7 @@ public class DiceBattleView extends JFrame {
 
 	private CombatLogic combatLogic;
 	private List<JLabel> diceLabels;
+	private MusicThread playMusic;
 
 	final static int WIDTH = 800;
 	final static int HEIGHT = 650;
@@ -49,9 +47,9 @@ public class DiceBattleView extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-		InputStream in = getClass().getResourceAsStream("/Sound/risk music .wav");
-		AudioStream music = new AudioStream(in);
-		AudioPlayer.player.start(music);
+		// InputStream in = getClass().getResourceAsStream("/Sound/risk music .wav");
+		// AudioStream music = new AudioStream(in);
+		// AudioPlayer.player.start(music);
 
 		setContentPane(new BattlePanel(attacker, defender));
 
@@ -122,6 +120,9 @@ public class DiceBattleView extends JFrame {
 		add(attackerPanel, BorderLayout.WEST);
 		add(defenderPanel, BorderLayout.EAST);
 
+		playMusic = new MusicThread();
+		playMusic.run();
+
 		ActionListener listener = new ActionListener() {
 
 			ArrayList<Integer> defenderDice;
@@ -151,6 +152,7 @@ public class DiceBattleView extends JFrame {
 						JOptionPane.showMessageDialog(null, "Attacker Wins! " + attacker.getName() + " has conquered "
 								+ defender.getName());
 						dispose();
+						playMusic.stopMusic();
 					}
 					if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
 						JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");
@@ -235,6 +237,7 @@ public class DiceBattleView extends JFrame {
 
 	private void forfeit() {
 		dispose();
+		playMusic.stopMusic();
 
 	}
 
@@ -280,15 +283,4 @@ public class DiceBattleView extends JFrame {
 		}
 	}
 
-	// Just for testing the gui
-	public static void main(String[] args) {
-		Territory A = new Territory("Testing", 1, 2);
-		Territory B = new Territory("Testing", 1, 4);
-		try {
-			new DiceBattleView(A, B).setVisible(true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

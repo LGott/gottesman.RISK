@@ -58,6 +58,7 @@ public class MoveOrAttackController implements GameController {
 			return;
 		} else {
 			territory.occupy(activePlayer);
+			activePlayer.addTerritory(territory);
 			selectedTerritory.moveBattalionsTo(territory, battalionNum);
 		}
 		selectedTerritoryView.repaint();

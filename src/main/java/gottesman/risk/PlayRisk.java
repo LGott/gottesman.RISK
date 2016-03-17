@@ -27,6 +27,7 @@ public class PlayRisk extends JFrame implements GameStateListener {
 	private BoardView boardView;
 	private GameState gameState;
 	private JButton phaseButton;
+	private MusicThread playMusic;
 
 	public PlayRisk() throws IOException {
 
@@ -65,7 +66,8 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		// InputStream in = new FileInputStream("Sound/risk music .wav");
 		// AudioStream music = new AudioStream(in);
 		// AudioPlayer.player.start(music);
-
+		// playMusic = new MusicThread();
+		// playMusic.run();
 	}
 
 	public void onPhaseChange(GameState.Phase phase) {
@@ -85,9 +87,14 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		phaseButton.setText(phase.name());
 	}
 
+	public MusicThread getMusic() {
+		return this.playMusic;
+	}
+
 	public static void main(String[] args) {
 		try {
 			new PlayRisk().setVisible(true);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
