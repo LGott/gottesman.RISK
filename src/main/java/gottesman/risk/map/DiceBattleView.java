@@ -1,7 +1,6 @@
 package gottesman.risk.map;
 
 import gottesman.risk.CombatLogic;
-import gottesman.risk.MusicThread;
 import gottesman.risk.Territory;
 
 import java.awt.BorderLayout;
@@ -23,6 +22,10 @@ import javax.swing.JPanel;
 
 public class DiceBattleView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton rollThreeA;
 	private JButton rollTwoA;
 	private JButton rollOneA;
@@ -34,7 +37,6 @@ public class DiceBattleView extends JFrame {
 
 	private CombatLogic combatLogic;
 	private List<JLabel> diceLabels;
-	private MusicThread playMusic;
 
 	final static int WIDTH = 800;
 	final static int HEIGHT = 650;
@@ -46,10 +48,6 @@ public class DiceBattleView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-
-		// InputStream in = getClass().getResourceAsStream("/Sound/risk music .wav");
-		// AudioStream music = new AudioStream(in);
-		// AudioPlayer.player.start(music);
 
 		setContentPane(new BattlePanel(attacker, defender));
 
@@ -120,9 +118,6 @@ public class DiceBattleView extends JFrame {
 		add(attackerPanel, BorderLayout.WEST);
 		add(defenderPanel, BorderLayout.EAST);
 
-		playMusic = new MusicThread();
-		playMusic.run();
-
 		ActionListener listener = new ActionListener() {
 
 			ArrayList<Integer> defenderDice;
@@ -152,7 +147,7 @@ public class DiceBattleView extends JFrame {
 						JOptionPane.showMessageDialog(null, "Attacker Wins! " + attacker.getName() + " has conquered "
 								+ defender.getName());
 						dispose();
-						playMusic.stopMusic();
+
 					}
 					if (attacker.getBattalions() <= 1) { // If attacker has 1 battalion, attack is over
 						JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");
@@ -173,7 +168,6 @@ public class DiceBattleView extends JFrame {
 				rollTwoD.setEnabled(false);
 				rollOneD.setEnabled(false);
 				disableButtons(buttonsA);
-				// attackAgain.setEnabled(false);
 				attackAgain(buttonsA, buttonsD);
 			}
 		});
@@ -237,8 +231,6 @@ public class DiceBattleView extends JFrame {
 
 	private void forfeit() {
 		dispose();
-		playMusic.stopMusic();
-
 	}
 
 	public void disableButtons(ArrayList<JButton> buttons) {
@@ -258,7 +250,6 @@ public class DiceBattleView extends JFrame {
 		for (int i = 0; i < diceSet.size(); i++) {
 
 			switch (diceSet.get(i)) {
-			// TODO Change text to ImageIcons
 			case 1:
 
 				diceLabels.get(i).setIcon(new ImageIcon(getClass().getResource("/Images/Dice1.png")));

@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -74,13 +76,9 @@ public class PlayRisk extends JFrame implements GameStateListener {
 			}
 		});
 
+		playMusic = new MusicThread();
 		gameState.startGame();
-
-		// InputStream in = new FileInputStream("Sound/risk music .wav");
-		// AudioStream music = new AudioStream(in);
-		// AudioPlayer.player.start(music);
-		// playMusic = new MusicThread();
-		// playMusic.run();
+		startMusic();
 	}
 
 	public void onPhaseChange(GameState.Phase phase) {
@@ -100,8 +98,13 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		phaseButton.setText(phase.name());
 	}
 
-	public MusicThread getMusic() {
-		return this.playMusic;
+	public void startMusic() {
+		ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+		executor.scheduleWithFixedDelay(new Runnable() {
+			public void run() {
+				playMusic.run();
+			}
+		}, 0, 158, TimeUnit.SECONDS);
 	}
 
 	public static void main(String[] args) {

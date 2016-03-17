@@ -70,6 +70,7 @@ public class MoveOrAttackController implements GameController {
 		// Can only attack if has more than one battalion
 		try {
 			new DiceBattleView(selectedTerritory, territory).setVisible(true);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
