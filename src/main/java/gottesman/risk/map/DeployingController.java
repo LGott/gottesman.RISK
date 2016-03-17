@@ -25,12 +25,13 @@ public class DeployingController implements GameController {
 		int battalionsToDeploy = activePlayer.getBattalionsToDeploy();
 		if (battalionsToDeploy >= 1) {
 			if (territory.isOccupiedBy(activePlayer)) {
+
 				int battalionNum = Integer.parseInt(JOptionPane.showInputDialog(null, "You have " + battalionsToDeploy
 						+ " battalions to deploy. Enter the amount of battalions"
 						+ " you would like to deploy to this territory."));
-				if (battalionNum > battalionsToDeploy) {
-					JOptionPane.showMessageDialog(null,
-							"Not enough reinforcements to deploy that amount of battalions. Try again.");
+
+				if ((battalionNum > battalionsToDeploy) || (battalionNum < 0)) {
+					JOptionPane.showMessageDialog(null, "Cannot deploy that amount of battalions. Try again.");
 				} else {
 					territory.increaseBattalions(battalionNum);
 					activePlayer.setBattalionsToDeploy(battalionsToDeploy - battalionNum);

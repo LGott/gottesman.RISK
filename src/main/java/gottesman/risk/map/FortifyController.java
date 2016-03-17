@@ -29,12 +29,18 @@ public class FortifyController implements GameController {
 			if (selectedTerritoryView != null) {
 				Territory selectedTerritory = selectedTerritoryView.getTerritory();
 				if (dataManager.areNeighbors(selectedTerritory, territory)) {
+
 					int battalionNum = Integer.parseInt(JOptionPane.showInputDialog(null,
 							"Enter the amount of battalions you would like to fortify the territory with."));
-					selectedTerritory.moveBattalionsTo(territory, battalionNum);
-					selectedTerritoryView.repaint();
-					territoryView.repaint();
-					gameState.nextPhase();
+
+					if ((battalionNum > selectedTerritory.getBattalions()) || (battalionNum < 0)) {
+						JOptionPane.showMessageDialog(null, "Cannot deploy that amount of battalions. Try again.");
+					} else {
+						selectedTerritory.moveBattalionsTo(territory, battalionNum);
+						selectedTerritoryView.repaint();
+						territoryView.repaint();
+						gameState.nextPhase();
+					}
 				}
 			} else {
 				selectTerritory(territoryView);
