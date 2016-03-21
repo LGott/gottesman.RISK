@@ -86,7 +86,7 @@ public class DiceBattleView extends JFrame {
 		buttonsA.add(this.rollOneA = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
 
 		buttonPanel
-				.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
+		.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
 		buttonPanel.add(this.forfeit = new JButton(new ImageIcon(getClass().getResource("/Images/Forfeit.png"))));
 		buttonPanel.add(this.battalionsA = new JLabel(attacker.getBattalions() + " Battalions"));
 
@@ -176,7 +176,7 @@ public class DiceBattleView extends JFrame {
 
 		attackAgain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				check(attacker, defender);
 				rollTwoD.setEnabled(false);
 				rollOneD.setEnabled(false);
 				disableButtons(buttonsA);
@@ -243,6 +243,19 @@ public class DiceBattleView extends JFrame {
 
 	private void forfeit() {
 		dispose();
+	}
+
+	public void check(Territory attacker, Territory defender) {
+		if (attacker.getBattalions() <= 3) {
+			rollThreeA.setEnabled(false);
+		}
+		if (attacker.getBattalions() <= 2) {
+			rollTwoA.setEnabled(false);
+		}
+
+		if (defender.getBattalions() <= 2) {
+			rollTwoD.setEnabled(false);
+		}
 	}
 
 	public void disableButtons(ArrayList<JButton> buttons) {

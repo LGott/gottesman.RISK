@@ -6,6 +6,7 @@ import gottesman.risk.map.controllers.FortifyController;
 import gottesman.risk.map.controllers.MoveOrAttackController;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class PlayRisk extends JFrame implements GameStateListener {
 
@@ -30,6 +34,7 @@ public class PlayRisk extends JFrame implements GameStateListener {
 	private BoardView boardView;
 	private GameState gameState;
 	private JButton phaseButton;
+	private JTextArea terLabel;
 	private MusicThread playMusic;
 
 	public PlayRisk() throws IOException {
@@ -57,30 +62,65 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		final JButton startButton = new JButton("PLAY GAME!");
 		startButton.setPreferredSize(new Dimension(150, 40));
 		container.add(startButton, BorderLayout.NORTH);
+		final JPanel phasePanel = new JPanel();
+		phasePanel.setPreferredSize(new Dimension(80, 80));
+		phasePanel.setBackground(Color.BLACK);
+		JButton cardButton = new JButton();
+		cardButton.setPreferredSize(new Dimension(200, 50));
+		phasePanel.add(phaseButton = new JButton());
+		cardButton.setText("View Current Player Cards");
+		phasePanel.add(cardButton);
+		phasePanel.setVisible(false);
+		terLabel = new JTextArea("");
+		terLabel.setForeground(Color.WHITE);
+		terLabel.setPreferredSize(new Dimension(150, 50));
+		terLabel.setOpaque(false);
+		terLabel.setLineWrap(true);
+		terLabel.setWrapStyleWord(true);
+		terLabel.setBackground(Color.BLACK);
+		terLabel.setEditable(false);
+		phasePanel.add(terLabel);
+		phaseButton.setOpaque(true);
+		phaseButton.setPreferredSize(new Dimension(200, 50));
+		phaseButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					gameState.nextPhase();
+				} catch (DeckEmptyException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		startButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				startPanel.setVisible(false);
 				container.add(boardView, BorderLayout.CENTER);
-				container.add(phaseButton, BorderLayout.SOUTH);
 				startButton.setVisible(false);
+				phasePanel.setVisible(true);
 			}
 		});
-
-		phaseButton = new JButton();
-		phaseButton.setOpaque(true);
-		phaseButton.setPreferredSize(new Dimension(120, 30));
-		phaseButton.addActionListener(new ActionListener() {
+		cardButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				gameState.nextPhase();
+				JOptionPane.showMessageDialog(null, gameState.getActivePlayer().getCards().toString());
 			}
 		});
+		container.add(phasePanel, BorderLayout.SOUTH);
 
 		playMusic = new MusicThread();
-		gameState.startGame();
+
+		try {
+			gameState.startGame();
+		} catch (DeckEmptyException e1) {
+			e1.printStackTrace();
+		}
 		startMusic();
 	}
 
+	@Override
 	public void onPhaseChange(GameState.Phase phase) {
 		switch (phase) {
 		case DEPLOY:
@@ -95,12 +135,17 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		}
 
 		phaseButton.setBackground(gameState.getActivePlayer().getColor());
-		phaseButton.setText(phase.name());
+		phaseButton.setText("Current Phase: " + phase.name());
+		terLabel.setText("Player 1: " + String.valueOf(gameState.getPlayers().get(0).getTerritories().size())
+				+ " Territories\n" + "Player 2: "
+				+ String.valueOf(gameState.getPlayers().get(1).getTerritories().size()) + " Territories\n"
+				+ "Player 3: " + String.valueOf(gameState.getPlayers().get(2).getTerritories().size() + " Territories"));
 	}
 
 	public void startMusic() {
 		ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
 		executor.scheduleWithFixedDelay(new Runnable() {
+			@Override
 			public void run() {
 				playMusic.run();
 			}

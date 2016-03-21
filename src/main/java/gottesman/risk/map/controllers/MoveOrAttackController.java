@@ -1,6 +1,7 @@
 package gottesman.risk.map.controllers;
 
 import gottesman.risk.DataManager;
+import gottesman.risk.DeckEmptyException;
 import gottesman.risk.GameState;
 import gottesman.risk.Player;
 import gottesman.risk.Territory;
@@ -27,7 +28,9 @@ public class MoveOrAttackController implements GameController {
 		this.dataManager = dataManager;
 	}
 
-	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory) {
+	@Override
+	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory)
+			throws DeckEmptyException {
 		Player activePlayer = gameState.getActivePlayer();
 
 		// select one of your territories
@@ -51,7 +54,7 @@ public class MoveOrAttackController implements GameController {
 	}
 
 	private void captureTerritory(Player activePlayer, Territory selectedTerritory, TerritoryView territoryView,
-			Territory territory) {
+			Territory territory) throws DeckEmptyException {
 		// move battalions
 
 		int battalionNum = Integer.parseInt(JOptionPane.showInputDialog(null,
@@ -60,6 +63,7 @@ public class MoveOrAttackController implements GameController {
 			JOptionPane.showMessageDialog(null, "Cannot move this amount of battalions. Try again.");
 			return;
 		} else {
+			territory.getPlayer().removeTerritory(territory); // remove the territory from the player's list
 			territory.occupy(activePlayer);
 			activePlayer.addTerritory(territory);
 			selectedTerritory.moveBattalionsTo(territory, battalionNum);
@@ -67,6 +71,8 @@ public class MoveOrAttackController implements GameController {
 		selectedTerritoryView.repaint();
 		territoryView.repaint();
 		selectTerritory(territoryView);
+
+		gameState.setConquer(true);
 	}
 
 	private void startBattle(Territory territory, Territory selectedTerritory) {
@@ -90,6 +96,7 @@ public class MoveOrAttackController implements GameController {
 		selectedTerritoryView.setSelected(true);
 	}
 
+	@Override
 	public void onClickMap(BoardView boardView) {
 		unselectSelectedTerritory();
 	}

@@ -33,6 +33,12 @@ public class Player {
 		this.territories.add(territories);
 	}
 
+	public void removeTerritory(Territory t) {
+		if (territories.contains(t)) {
+			this.territories.remove(t);
+		}
+	}
+
 	public Color getColor() {
 		return color;
 	}
@@ -46,4 +52,7 @@ public class Player {
 		this.battalionsToDeploy = battalionsToDeploy;
 	}
 
+	public void checkCardMatch() {
+		// TODO:
+	}
 }

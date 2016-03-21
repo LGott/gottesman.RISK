@@ -1,10 +1,10 @@
 package gottesman.risk.map;
 
+import gottesman.risk.DeckEmptyException;
+import gottesman.risk.map.controllers.GameController;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
-import gottesman.risk.map.controllers.GameController;
 
 public class TerritoryViewListener implements MouseListener {
 
@@ -15,7 +15,12 @@ public class TerritoryViewListener implements MouseListener {
 
 	public void mouseClicked(MouseEvent e) {
 		TerritoryView territoryView = (TerritoryView) e.getSource();
-		gameController.onClickTerritory(null, territoryView, territoryView.getTerritory());
+		try {
+			gameController.onClickTerritory(null, territoryView, territoryView.getTerritory());
+		} catch (DeckEmptyException e1) {
+
+			e1.printStackTrace();
+		}
 	}
 
 	public void mousePressed(MouseEvent e) {

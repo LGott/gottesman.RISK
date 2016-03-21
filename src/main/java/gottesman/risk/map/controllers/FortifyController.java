@@ -1,6 +1,7 @@
 package gottesman.risk.map.controllers;
 
 import gottesman.risk.DataManager;
+import gottesman.risk.DeckEmptyException;
 import gottesman.risk.GameState;
 import gottesman.risk.Player;
 import gottesman.risk.Territory;
@@ -24,7 +25,9 @@ public class FortifyController implements GameController {
 		this.dataManager = dataManager;
 	}
 
-	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory) {
+	@Override
+	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory)
+			throws DeckEmptyException {
 		Player activePlayer = gameState.getActivePlayer();
 
 		if (territory.isOccupiedBy(activePlayer)) {
@@ -56,6 +59,7 @@ public class FortifyController implements GameController {
 		selectedTerritoryView.setSelected(true);
 	}
 
+	@Override
 	public void onClickMap(BoardView boardView) {
 		unselectSelectedTerritory();
 	}

@@ -41,7 +41,6 @@ public class CardDeck {
 
 		BattalionType cardDrawn = deck.get(num);
 		deck.remove(num); // Remove the card from the arrayList so that it cannot be drawn again
-		System.out.println(deck);
 		return cardDrawn;
 
 	}

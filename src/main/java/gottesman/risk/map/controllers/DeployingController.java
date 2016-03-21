@@ -1,5 +1,6 @@
 package gottesman.risk.map.controllers;
 
+import gottesman.risk.DeckEmptyException;
 import gottesman.risk.GameState;
 import gottesman.risk.Player;
 import gottesman.risk.Territory;
@@ -20,7 +21,9 @@ public class DeployingController implements GameController {
 		this.gameState = gameState;
 	}
 
-	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory) {
+	@Override
+	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory)
+			throws DeckEmptyException {
 
 		Player activePlayer = gameState.getActivePlayer();
 
@@ -47,6 +50,7 @@ public class DeployingController implements GameController {
 		}
 	}
 
+	@Override
 	public void onClickMap(BoardView boardView) {
 	}
 
