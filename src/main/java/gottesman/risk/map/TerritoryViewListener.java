@@ -1,6 +1,6 @@
 package gottesman.risk.map;
 
-import gottesman.risk.DeckEmptyException;
+import gottesman.risk.battle.DeckEmptyException;
 import gottesman.risk.map.controllers.GameController;
 
 import java.awt.event.MouseEvent;

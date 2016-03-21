@@ -1,4 +1,6 @@
-package gottesman.risk;
+package gottesman.risk.battle;
+
+import gottesman.risk.BattalionType;
 
 import java.util.ArrayList;
 import java.util.Random;

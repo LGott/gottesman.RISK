@@ -1,12 +1,12 @@
 package gottesman.risk.map.controllers;
 
 import gottesman.risk.DataManager;
-import gottesman.risk.DeckEmptyException;
-import gottesman.risk.GameState;
 import gottesman.risk.Player;
 import gottesman.risk.Territory;
+import gottesman.risk.battle.DeckEmptyException;
 import gottesman.risk.map.BoardView;
 import gottesman.risk.map.TerritoryView;
+import gottesman.risk.playGame.GameState;
 
 import javax.swing.JOptionPane;
 

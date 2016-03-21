@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class DiceBattleView extends JFrame {
+public class BattleFrame extends JFrame {
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class DiceBattleView extends JFrame {
 	final static int WIDTH = 800;
 	final static int HEIGHT = 650;
 
-	public DiceBattleView(final Territory attacker, final Territory defender) throws IOException {
+	public BattleFrame(final Territory attacker, final Territory defender) throws IOException {
 
 		setTitle("Risk Battle!");
 		setSize(WIDTH, HEIGHT);
@@ -86,7 +86,7 @@ public class DiceBattleView extends JFrame {
 		buttonsA.add(this.rollOneA = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
 
 		buttonPanel
-		.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
+				.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
 		buttonPanel.add(this.forfeit = new JButton(new ImageIcon(getClass().getResource("/Images/Forfeit.png"))));
 		buttonPanel.add(this.battalionsA = new JLabel(attacker.getBattalions() + " Battalions"));
 
@@ -138,6 +138,7 @@ public class DiceBattleView extends JFrame {
 			ArrayList<Integer> defenderDice;
 			ArrayList<Integer> attackerDice;
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				rollTwoD.setEnabled(true);
 				rollOneD.setEnabled(true);
@@ -175,6 +176,7 @@ public class DiceBattleView extends JFrame {
 		};
 
 		attackAgain.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				check(attacker, defender);
 				rollTwoD.setEnabled(false);

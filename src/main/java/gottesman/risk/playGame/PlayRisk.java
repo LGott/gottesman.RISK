@@ -1,9 +1,12 @@
-package gottesman.risk;
+package gottesman.risk.playGame;
 
+import gottesman.risk.DataManager;
+import gottesman.risk.battle.DeckEmptyException;
 import gottesman.risk.map.BoardView;
 import gottesman.risk.map.controllers.DeployingController;
 import gottesman.risk.map.controllers.FortifyController;
 import gottesman.risk.map.controllers.MoveOrAttackController;
+import gottesman.risk.playGame.GameState.Phase;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -105,7 +108,11 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		cardButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, gameState.getActivePlayer().getCards().toString());
+				if (gameState.getActivePlayer().getCards().size() == 0) {
+					JOptionPane.showMessageDialog(null, "No Cards Yet");
+				} else {
+					JOptionPane.showMessageDialog(null, gameState.getActivePlayer().getCards().toString());
+				}
 			}
 		});
 		container.add(phasePanel, BorderLayout.SOUTH);

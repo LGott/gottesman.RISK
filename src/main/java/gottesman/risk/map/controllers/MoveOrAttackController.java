@@ -1,13 +1,13 @@
 package gottesman.risk.map.controllers;
 
 import gottesman.risk.DataManager;
-import gottesman.risk.DeckEmptyException;
-import gottesman.risk.GameState;
 import gottesman.risk.Player;
 import gottesman.risk.Territory;
-import gottesman.risk.battle.DiceBattleView;
+import gottesman.risk.battle.BattleFrame;
+import gottesman.risk.battle.DeckEmptyException;
 import gottesman.risk.map.BoardView;
 import gottesman.risk.map.TerritoryView;
+import gottesman.risk.playGame.GameState;
 
 import java.io.IOException;
 
@@ -73,12 +73,13 @@ public class MoveOrAttackController implements GameController {
 		selectTerritory(territoryView);
 
 		gameState.setConquer(true);
+		System.out.println(gameState.getActivePlayer().getTerritories().toString());
 	}
 
 	private void startBattle(Territory territory, Territory selectedTerritory) {
 		// Can only attack if has more than one battalion
 		try {
-			new DiceBattleView(selectedTerritory, territory).setVisible(true);
+			new BattleFrame(selectedTerritory, territory).setVisible(true);
 
 		} catch (IOException e) {
 			e.printStackTrace();

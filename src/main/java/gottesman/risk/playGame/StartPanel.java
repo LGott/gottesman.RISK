@@ -1,4 +1,4 @@
-package gottesman.risk;
+package gottesman.risk.playGame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

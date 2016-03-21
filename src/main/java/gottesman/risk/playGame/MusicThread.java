@@ -1,4 +1,4 @@
-package gottesman.risk;
+package gottesman.risk.playGame;
 
 import java.applet.Applet;
 import java.applet.AudioClip;

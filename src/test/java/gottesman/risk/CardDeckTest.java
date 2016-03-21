@@ -1,5 +1,7 @@
 package gottesman.risk;
 
+import gottesman.risk.battle.CardDeck;
+import gottesman.risk.battle.DeckEmptyException;
 import junit.framework.Assert;
 
 import org.junit.Test;

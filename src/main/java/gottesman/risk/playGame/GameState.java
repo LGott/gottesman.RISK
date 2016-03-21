@@ -1,4 +1,12 @@
-package gottesman.risk;
+package gottesman.risk.playGame;
+
+import gottesman.risk.BattalionType;
+import gottesman.risk.Continent;
+import gottesman.risk.DataManager;
+import gottesman.risk.Player;
+import gottesman.risk.Territory;
+import gottesman.risk.battle.CardDeck;
+import gottesman.risk.battle.DeckEmptyException;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -21,7 +29,7 @@ public class GameState {
 	}
 
 	private static final Color colors[] = new Color[] { Color.WHITE, Color.GREEN, Color.CYAN, Color.BLUE, Color.RED,
-			Color.MAGENTA, };
+		Color.MAGENTA, };
 
 	private List<Player> players;
 	private int currentPlayer;
@@ -162,6 +170,7 @@ public class GameState {
 		}
 
 		player.setBattalionsToDeploy(Math.max(battalionsToDeploy, 3));
+		System.out.println(occupiedTerritories.toString());
 	}
 
 	public void nextPlayer() {
@@ -188,7 +197,7 @@ public class GameState {
 	private String getImageIcon(String card) {
 		switch (card) {
 		case "CAVALRY":
-			return "/Images/cavalry.jpg"; // TODO change to png
+			return "/Images/cavalry.png";
 		case "CANNON":
 			return "/Images/cannon.png";
 		case "INFINTRY":
