@@ -39,6 +39,9 @@ public class BattleFrame extends JFrame {
 	private CombatLogic combatLogic;
 	private List<JLabel> diceLabels;
 
+	private ArrayList<Integer> attackerDice;
+	private ArrayList<Integer> defenderDice;
+
 	final static int WIDTH = 800;
 	final static int HEIGHT = 650;
 
@@ -57,6 +60,8 @@ public class BattleFrame extends JFrame {
 
 		this.combatLogic = new CombatLogic();
 		this.diceLabels = new ArrayList<JLabel>();
+		this.defenderDice = new ArrayList<Integer>();
+		this.attackerDice = new ArrayList<Integer>();
 
 		JPanel dicePanel = new JPanel();
 		JPanel attackerPanel = new JPanel();
@@ -106,6 +111,9 @@ public class BattleFrame extends JFrame {
 		for (JLabel die : diceLabels) {
 			dicePanel.add(die);
 		}
+		for (JLabel die : diceLabels) {
+			die.setOpaque(false);
+		}
 
 		for (JButton but : buttonsA) {
 			for (JButton b : buttonsD) {
@@ -116,10 +124,6 @@ public class BattleFrame extends JFrame {
 				b.setContentAreaFilled(false);
 				b.setBorderPainted(false);
 			}
-		}
-
-		for (JLabel die : diceLabels) {
-			die.setOpaque(false);
 		}
 
 		attackAgain.setOpaque(false);
@@ -133,74 +137,104 @@ public class BattleFrame extends JFrame {
 		add(attackerPanel, BorderLayout.WEST);
 		add(defenderPanel, BorderLayout.EAST);
 
-		ActionListener listener = new ActionListener() {
-
-			ArrayList<Integer> defenderDice;
-			ArrayList<Integer> attackerDice;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				rollTwoD.setEnabled(true);
-				rollOneD.setEnabled(true);
-
-				JButton button = (JButton) e.getSource();
-				if (button.equals(rollThreeA) || button.equals(rollTwoA) || button.equals(rollOneA)) {
-					if (button.equals(rollOneA)) { // If attacker chooses one die, defender can only roll 1 also
-						rollTwoD.setEnabled(false);
-					}
-					attackerDice = getDiceSet(button, buttonsA);
-				}
-				if (button.equals(rollTwoD) || button.equals(rollOneD)) {
-					defenderDice = getDiceSet(button, buttonsD);
-				}
-				if (button.equals(forfeit)) {
-					forfeit();
-				}
-				if (e.getSource().equals(rollTwoD) || e.getSource().equals(rollOneD)) {
-					combatLogic.calculateWin(attackerDice, defenderDice, attacker, defender);
-					battalionsA.setText((attacker.getBattalions() + " battalion(s) left"));
-					battalionsD.setText((defender.getBattalions() + " battalion(s) left"));
-					repaint();
-					if (defender.getBattalions() < 1) {
-						JOptionPane.showMessageDialog(null, "Attacker Wins! " + attacker.getName() + " has conquered "
-								+ defender.getName());
-						dispose();
-
-					}
-					if (attacker.getBattalions() == 1) { // If attacker has 1 battalion, attack is over
-						JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");
-						attackAgain.setEnabled(false);
-					}
-				}
-			}
-		};
-
-		attackAgain.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				check(attacker, defender);
-				rollTwoD.setEnabled(false);
-				rollOneD.setEnabled(false);
-				disableButtons(buttonsA);
-				attackAgain(buttonsA, buttonsD);
-			}
-		});
-
 		for (JButton button : buttonsA) {
-			diceAPanel.add(button);
-			button.addActionListener(listener);
-		}
-
-		for (JButton button : buttonsD) {
-			defenderPanel.add(button);
-			button.addActionListener(listener);
+			for (JButton b : buttonsD) {
+				diceAPanel.add(button);
+				defenderPanel.add(b);
+			}
 		}
 
 		attackerPanel.add(diceAPanel, BorderLayout.WEST);
 		attackerPanel.add(buttonPanel, BorderLayout.EAST);
 
-		attackAgain.addActionListener(listener);
-		forfeit.addActionListener(listener);
+		actionListeners(attacker, defender, buttonsA, buttonsD);
+		check(attacker, defender);
+	}
+
+	private void actionListeners(final Territory attacker, final Territory defender, final ArrayList<JButton> buttonsA,
+			final ArrayList<JButton> buttonsD) {
+
+		rollThreeA.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rollTwoD.setEnabled(true);
+				rollOneD.setEnabled(true);
+				attackerDice = getDiceSet((JButton) e.getSource(), buttonsA);
+			}
+		});
+
+		rollTwoA.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rollTwoD.setEnabled(true);
+				rollOneD.setEnabled(true);
+				attackerDice = getDiceSet((JButton) e.getSource(), buttonsA);
+			}
+		});
+		rollOneA.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rollTwoD.setEnabled(false);
+				rollOneD.setEnabled(true);
+				attackerDice = getDiceSet((JButton) e.getSource(), buttonsA);
+			}
+		});
+		rollTwoD.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				defenderDice = getDiceSet((JButton) e.getSource(), buttonsD);
+				calculateWin(attackerDice, defenderDice, attacker, defender);
+
+			}
+		});
+		rollOneD.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				defenderDice = getDiceSet((JButton) e.getSource(), buttonsD);
+				calculateWin(attackerDice, defenderDice, attacker, defender);
+			}
+		});
+
+		attackAgain.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for (JButton a : buttonsA) {
+					for (JButton d : buttonsD) {
+						a.setEnabled(true);
+						d.setEnabled(true);
+					}
+				}
+				check(attacker, defender);
+				rollTwoD.setEnabled(true);
+				rollOneD.setEnabled(true);
+
+			}
+		});
+
+		forfeit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+
+	}
+
+	private void calculateWin(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice, Territory attacker,
+			Territory defender) {
+		combatLogic.calculateWin(attackerDice, defenderDice, attacker, defender);
+		battalionsA.setText((attacker.getBattalions() + " battalion(s) left"));
+		battalionsD.setText((defender.getBattalions() + " battalion(s) left"));
+		repaint();
+
+		if (defender.getBattalions() < 1) {
+			JOptionPane.showMessageDialog(null,
+					"Attacker Wins! " + attacker.getName() + " has conquered " + defender.getName());
+			dispose();
+		} else if (attacker.getBattalions() == 1) { // If attacker has 1 battalion, attack is over
+			JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");
+			attackAgain.setEnabled(false);
+		}
 	}
 
 	private ArrayList<Integer> getDiceSet(JButton button, ArrayList<JButton> buttons) {
@@ -230,21 +264,6 @@ public class BattleFrame extends JFrame {
 			displayDice(diceSet);
 		}
 		return diceSet;
-	}
-
-	private void attackAgain(ArrayList<JButton> A, ArrayList<JButton> D) {
-
-		// Re-enable buttons
-		for (JButton a : A) {
-			for (JButton d : D) {
-				a.setEnabled(true);
-				d.setEnabled(true);
-			}
-		}
-	}
-
-	private void forfeit() {
-		dispose();
 	}
 
 	public void check(Territory attacker, Territory defender) {

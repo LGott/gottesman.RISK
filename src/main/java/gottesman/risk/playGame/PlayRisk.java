@@ -6,7 +6,6 @@ import gottesman.risk.controllers.DeployingController;
 import gottesman.risk.controllers.FortifyController;
 import gottesman.risk.controllers.MoveOrAttackController;
 import gottesman.risk.map.BoardView;
-import gottesman.risk.playGame.GameState.Phase;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -53,7 +52,6 @@ public class PlayRisk extends JFrame implements GameStateListener {
 
 		dataManager = new DataManager();
 		boardView = new BoardView(dataManager.getTerritories());
-
 		gameState = new GameState(dataManager, this, 3);
 		deployingController = new DeployingController(gameState);
 		moveOrAttackController = new MoveOrAttackController(gameState, dataManager);
@@ -61,19 +59,20 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		boardView.setGameController(deployingController);
 
 		final StartPanel startPanel = new StartPanel();
-		container.add(startPanel, BorderLayout.CENTER);
-		final JButton startButton = new JButton("PLAY GAME!");
-		startButton.setPreferredSize(new Dimension(150, 40));
-		container.add(startButton, BorderLayout.NORTH);
 		final JPanel phasePanel = new JPanel();
+		final JButton startButton = new JButton("PLAY GAME!");
+		final JButton cardButton = new JButton();
+
+		container.add(startPanel, BorderLayout.CENTER);
+		container.add(startButton, BorderLayout.NORTH);
+		container.add(phasePanel, BorderLayout.SOUTH);
+
+		startButton.setPreferredSize(new Dimension(150, 40));
 		phasePanel.setPreferredSize(new Dimension(80, 80));
-		phasePanel.setBackground(Color.BLACK);
-		JButton cardButton = new JButton();
 		cardButton.setPreferredSize(new Dimension(200, 50));
-		phasePanel.add(phaseButton = new JButton());
+		phasePanel.setBackground(Color.BLACK);
 		cardButton.setText("View Current Player Cards");
-		phasePanel.add(cardButton);
-		phasePanel.setVisible(false);
+
 		terLabel = new JTextArea("");
 		terLabel.setForeground(Color.WHITE);
 		terLabel.setPreferredSize(new Dimension(150, 50));
@@ -82,7 +81,12 @@ public class PlayRisk extends JFrame implements GameStateListener {
 		terLabel.setWrapStyleWord(true);
 		terLabel.setBackground(Color.BLACK);
 		terLabel.setEditable(false);
+
+		phasePanel.setVisible(false);
+		phasePanel.add(phaseButton = new JButton());
+		phasePanel.add(cardButton);
 		phasePanel.add(terLabel);
+
 		phaseButton.setOpaque(true);
 		phaseButton.setPreferredSize(new Dimension(200, 50));
 		phaseButton.addActionListener(new ActionListener() {
@@ -115,7 +119,6 @@ public class PlayRisk extends JFrame implements GameStateListener {
 				}
 			}
 		});
-		container.add(phasePanel, BorderLayout.SOUTH);
 
 		playMusic = new MusicThread();
 
