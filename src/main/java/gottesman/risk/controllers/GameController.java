@@ -1,4 +1,4 @@
-package gottesman.risk.map.controllers;
+package gottesman.risk.controllers;
 
 import gottesman.risk.Territory;
 import gottesman.risk.battle.DeckEmptyException;

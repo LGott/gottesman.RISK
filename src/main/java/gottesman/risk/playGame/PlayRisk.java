@@ -2,10 +2,10 @@ package gottesman.risk.playGame;
 
 import gottesman.risk.DataManager;
 import gottesman.risk.battle.DeckEmptyException;
+import gottesman.risk.controllers.DeployingController;
+import gottesman.risk.controllers.FortifyController;
+import gottesman.risk.controllers.MoveOrAttackController;
 import gottesman.risk.map.BoardView;
-import gottesman.risk.map.controllers.DeployingController;
-import gottesman.risk.map.controllers.FortifyController;
-import gottesman.risk.map.controllers.MoveOrAttackController;
 import gottesman.risk.playGame.GameState.Phase;
 
 import java.awt.BorderLayout;

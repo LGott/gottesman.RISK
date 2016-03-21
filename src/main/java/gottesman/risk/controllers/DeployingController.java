@@ -1,4 +1,4 @@
-package gottesman.risk.map.controllers;
+package gottesman.risk.controllers;
 
 import gottesman.risk.Player;
 import gottesman.risk.Territory;

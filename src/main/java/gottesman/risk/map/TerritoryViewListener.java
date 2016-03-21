@@ -1,7 +1,7 @@
 package gottesman.risk.map;
 
 import gottesman.risk.battle.DeckEmptyException;
-import gottesman.risk.map.controllers.GameController;
+import gottesman.risk.controllers.GameController;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
