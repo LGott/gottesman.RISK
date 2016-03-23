@@ -90,8 +90,7 @@ public class BattleFrame extends JFrame {
 		buttonsA.add(this.rollTwoA = new JButton(new ImageIcon(getClass().getResource("/Images/2Dice.png"))));
 		buttonsA.add(this.rollOneA = new JButton(new ImageIcon(getClass().getResource("/Images/1Die.png"))));
 
-		buttonPanel
-				.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
+		buttonPanel.add(this.attackAgain = new JButton(new ImageIcon(getClass().getResource("/Images/AttackAgain.png"))));
 		buttonPanel.add(this.forfeit = new JButton(new ImageIcon(getClass().getResource("/Images/Forfeit.png"))));
 		buttonPanel.add(this.battalionsA = new JLabel(attacker.getBattalions() + " Battalions"));
 
@@ -110,8 +109,6 @@ public class BattleFrame extends JFrame {
 		}
 		for (JLabel die : diceLabels) {
 			dicePanel.add(die);
-		}
-		for (JLabel die : diceLabels) {
 			die.setOpaque(false);
 		}
 
@@ -220,16 +217,14 @@ public class BattleFrame extends JFrame {
 
 	}
 
-	private void calculateWin(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice, Territory attacker,
-			Territory defender) {
+	private void calculateWin(ArrayList<Integer> attackerDice, ArrayList<Integer> defenderDice, Territory attacker, Territory defender) {
 		combatLogic.calculateWin(attackerDice, defenderDice, attacker, defender);
 		battalionsA.setText((attacker.getBattalions() + " battalion(s) left"));
 		battalionsD.setText((defender.getBattalions() + " battalion(s) left"));
 		repaint();
 
 		if (defender.getBattalions() < 1) {
-			JOptionPane.showMessageDialog(null,
-					"Attacker Wins! " + attacker.getName() + " has conquered " + defender.getName());
+			JOptionPane.showMessageDialog(null, "Attacker Wins! " + attacker.getName() + " has conquered " + defender.getName());
 			dispose();
 		} else if (attacker.getBattalions() == 1) { // If attacker has 1 battalion, attack is over
 			JOptionPane.showMessageDialog(null, "Attacker has been defeated. Battle is forfeited.");

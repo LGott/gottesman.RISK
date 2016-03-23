@@ -28,19 +28,17 @@ public class GameState {
 		DEPLOY, MOVE, FORTIFY
 	}
 
-	private static final Color colors[] = new Color[] { Color.WHITE, Color.GREEN, Color.CYAN, Color.BLUE, Color.RED,
-		Color.MAGENTA, };
+	private static final Color colors[] = new Color[] { Color.WHITE, Color.GREEN, Color.CYAN, Color.BLUE, Color.RED, Color.MAGENTA, };
 
 	private List<Player> players;
 	private int currentPlayer;
 	private Phase phase;
 	private boolean conquer = false;
-
 	private GameStateListener gameStateListener;
-
 	private DataManager dataManager;
-
 	private CardDeck deck;
+	private int matchNum;
+	private int cardBonus;
 
 	public GameState(DataManager dataManager, GameStateListener gameStateListener, int numPlayers) {
 		players = new ArrayList<Player>();
@@ -49,6 +47,8 @@ public class GameState {
 		}
 		this.dataManager = dataManager;
 		this.gameStateListener = gameStateListener;
+		this.matchNum = 0;
+		this.cardBonus = 4; // First card bonus starts off as 4
 	}
 
 	/**
@@ -92,9 +92,7 @@ public class GameState {
 					break;
 				}
 			}
-
 			start += territoriesPerPlayer;
-
 		}
 
 		// Initialize the card Deck
@@ -103,6 +101,7 @@ public class GameState {
 
 		// Set up the correct player by setting it as the last player and then incrementing the phase.
 		currentPlayer = players.size();
+
 		phase = Phase.FORTIFY;
 		nextPhase();
 	}
@@ -154,12 +153,7 @@ public class GameState {
 			if (t.isOccupiedBy(player)) {
 				occupiedTerritories.add(t.getName());
 			}
-			// Check for winner before each turn starts
-			if (occupiedTerritories.containsAll(territories)) {
-				JOptionPane.showMessageDialog(null, player + " has conquered the world. Game over!");
-			}
 		}
-
 		int battalionsToDeploy = (int) Math.floor(occupiedTerritories.size() / 3.00);
 
 		List<Continent> continents = dataManager.getContinents();
@@ -169,8 +163,26 @@ public class GameState {
 			}
 		}
 
+		boolean cardMatch = this.getActivePlayer().checkCardMatch();
+		if (cardMatch) {
+			battalionsToDeploy += checkMatch();
+			matchNum++;
+		}
+
 		player.setBattalionsToDeploy(Math.max(battalionsToDeploy, 3));
 		System.out.println(occupiedTerritories.toString());
+	}
+
+	private int checkMatch() {
+		// According to game rules, the first 5 times that a match is traded in, the bonus increments by 2.
+		// After the 5th time, the bonus increments by 5.
+
+		if (matchNum >= 6) {
+			cardBonus += 5;
+		} else {
+			cardBonus += 2;
+		}
+		return cardBonus;
 	}
 
 	public void nextPlayer() {

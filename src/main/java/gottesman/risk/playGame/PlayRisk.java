@@ -113,7 +113,7 @@ public class PlayRisk extends JFrame implements GameStateListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (gameState.getActivePlayer().getCards().size() == 0) {
-					JOptionPane.showMessageDialog(null, "No Cards Yet");
+					JOptionPane.showMessageDialog(null, "No Cards");
 				} else {
 					JOptionPane.showMessageDialog(null, gameState.getActivePlayer().getCards().toString());
 				}
@@ -146,9 +146,8 @@ public class PlayRisk extends JFrame implements GameStateListener {
 
 		phaseButton.setBackground(gameState.getActivePlayer().getColor());
 		phaseButton.setText("Current Phase: " + phase.name());
-		terLabel.setText("Player 1: " + String.valueOf(gameState.getPlayers().get(0).getTerritories().size())
-				+ " Territories\n" + "Player 2: "
-				+ String.valueOf(gameState.getPlayers().get(1).getTerritories().size()) + " Territories\n"
+		terLabel.setText("Player 1: " + String.valueOf(gameState.getPlayers().get(0).getTerritories().size()) + " Territories\n"
+				+ "Player 2: " + String.valueOf(gameState.getPlayers().get(1).getTerritories().size()) + " Territories\n"
 				+ "Player 3: " + String.valueOf(gameState.getPlayers().get(2).getTerritories().size() + " Territories"));
 	}
 

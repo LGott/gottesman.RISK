@@ -44,6 +44,11 @@ public class FortifyController implements GameController {
 						selectedTerritory.moveBattalionsTo(territory, battalionNum);
 						selectedTerritoryView.repaint();
 						territoryView.repaint();
+						// Check for winner before each turn starts
+						if (gameState.getActivePlayer().getTerritories().size() == 42) {
+							JOptionPane.showMessageDialog(null,
+									"Congratulations, You have conquered the world! Game over!");
+						}
 						gameState.nextPhase();
 					}
 				}
