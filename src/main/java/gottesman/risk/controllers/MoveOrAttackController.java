@@ -29,8 +29,7 @@ public class MoveOrAttackController implements GameController {
 	}
 
 	@Override
-	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory)
-			throws DeckEmptyException {
+	public void onClickTerritory(BoardView boardView, TerritoryView territoryView, Territory territory) throws DeckEmptyException {
 		Player activePlayer = gameState.getActivePlayer();
 
 		// select one of your territories
@@ -53,12 +52,12 @@ public class MoveOrAttackController implements GameController {
 		}
 	}
 
-	private void captureTerritory(Player activePlayer, Territory selectedTerritory, TerritoryView territoryView,
-			Territory territory) throws DeckEmptyException {
+	private void captureTerritory(Player activePlayer, Territory selectedTerritory, TerritoryView territoryView, Territory territory)
+			throws DeckEmptyException {
 		// move battalions
 
-		int battalionNum = Integer.parseInt(JOptionPane.showInputDialog(null,
-				"Enter the amount of battalions you would like to move."));
+		int battalionNum = Integer.parseInt(JOptionPane
+				.showInputDialog(null, "Enter the amount of battalions you would like to move."));
 		if ((battalionNum >= selectedTerritory.getBattalions()) || (battalionNum < 0)) {
 			JOptionPane.showMessageDialog(null, "Cannot move this amount of battalions. Try again.");
 			return;
@@ -73,7 +72,6 @@ public class MoveOrAttackController implements GameController {
 		selectTerritory(territoryView);
 
 		gameState.setConquer(true);
-		System.out.println(gameState.getActivePlayer().getTerritories().toString());
 	}
 
 	private void startBattle(Territory territory, Territory selectedTerritory) {

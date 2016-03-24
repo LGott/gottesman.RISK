@@ -221,7 +221,6 @@ public class BattleFrame extends JFrame {
 		combatLogic.calculateWin(attackerDice, defenderDice, attacker, defender);
 		battalionsA.setText((attacker.getBattalions() + " battalion(s) left"));
 		battalionsD.setText((defender.getBattalions() + " battalion(s) left"));
-		repaint();
 
 		if (defender.getBattalions() < 1) {
 			JOptionPane.showMessageDialog(null, "Attacker Wins! " + attacker.getName() + " has conquered " + defender.getName());

@@ -170,7 +170,6 @@ public class GameState {
 		}
 
 		player.setBattalionsToDeploy(Math.max(battalionsToDeploy, 3));
-		System.out.println(occupiedTerritories.toString());
 	}
 
 	private int checkMatch() {
